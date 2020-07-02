@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+	</head>
+	<body>
+		<link rel="stylesheet" type="text/css" href="../lib-master/theme-chalk/index.css" />
+		
+		  <div id="ui001">
+		    <div class="box">
+		      <el-table
+		        :data="tableData" stripe
+		        style="max-width: 300px;">
+		        <el-table-column
+		          prop="date"
+		          label="Time"
+		          align="center"
+				   
+		          min-width="10">
+		        </el-table-column>
+		      </el-table>
+		
+		      <div class="btn-box">
+		        <el-button :loading="bloading" plain type="primary" @click="begin">开 始</el-button>
+		        <el-button plain type="warning" @click="pause">暂 定</el-button>
+		        <el-button plain type="success" @click="reset">重 置</el-button>
+		      </div>
+		    </div>
+		  </div>
+		<script src="../js/axios.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/vue.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../lib-master/index.js" charset="utf-8"></script>
+		<script>
+		  new Vue({
+		  	el: '#ui001',
+			data: {
+			  
+				//页面展示数据
+			    bloading : false,
+			    //页面使用数据
+			    tableData: [{date:""},{date:""},{date:""},{date:"1"}],
+				time:'5'
+			},
+		    created(){
+		    },
+		    watch:{
+		    },  
+		    mounted(){
+		    },
+		   
+		    methods: {
+				getNowDate(type){
+				  let now = new Date()
+				  let year = now.getFullYear()
+				  let month = now.getMonth() + 1
+				  let day = now.getDate()
+				  let hh = now.getHours()
+				  let mm = now.getMinutes()
+				  let ss = now.getSeconds()
+				
+				  month = month < 10 ? '0'+ month : month
+				  day = day < 10 ? '0'+ day : day
+				  hh = hh < 10 ? '0'+ hh : hh
+				  mm = mm < 10 ? '0'+ mm : mm
+				  ss = ss < 10 ? '0'+ ss : ss
+				
+				  if(type == 'day'){
+				    return year +'-'+ month +'-'+ day
+				  } else {
+				    return year +'-'+ month +'-'+ day + ' '+ hh + ':' + mm + ':' + ss
+				  }
+				},
+		      begin(){
+		        this.bloading = true
+		        this.tableData.push({ date: this.time })
+		        this.tableMove()
+		        this.a = setInterval(() =>{
+		          this.tableMove()
+		        },1000)
+		      },
+		      pause(){
+		        clearInterval(this.a)
+		        this.bloading = false
+		      },
+		      reset(){
+		        this.pause()
+		        setTimeout(() =>{
+		          this.tableData = []
+		        },1000)
+		      },
+		      tableMove(){
+		        // 48px 为表格行高
+		        let t = document.getElementsByClassName('el-table__body-wrapper')
+		        setTimeout(() =>{
+		          this.tableData.splice(0,1)
+		          t[1].style.transition = 'all .5s ease-in'
+				  t[1].style.display = none
+		          t[1].style.transform='tranlateX(-48px)';
+		        },500)
+		        setTimeout(() =>{
+		          this.tableData.push({ date: this.time })
+		          t[1].style.transition = 'all 0s ease 0s'
+		          t[1].style.marginTop = '0'
+		        },1000)
+		      },
+		    }
+		  });
+		</script>
+		
+		<style scoped lang="scss">
+		  .box {
+		    padding: 100px;
+		    display: flex;
+		  }
+		  .el-table__header-wrapper{z-index: 9999;}
+		  .el-table__body-wrapper tr{z-index: 100;height: 48px;}
+		  .el-table__body-wrapper{z-index: 100;height: 192px;}
+
+		  .btn-box {
+		    margin-left: 100px;
+		    margin-top: 50px;
+		  }
+		</style>
+	</body>
+</html>
