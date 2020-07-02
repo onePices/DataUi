@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section name="Workbench">
+	<section name="org.eclipse.m2e.core.pom.dependencies">
+	</section>
+	<section name="MavenProjectWizardArtifactPage">
+		<list key="groupId">
+			<item value="com.city.springcloud"/>
+			<item value="com.test.springcloud"/>
+		</list>
+		<list key="name">
+		</list>
+		<list key="artifactId">
+			<item value="citycloud-entity"/>
+			<item value="citycloud"/>
+			<item value="citycloud-lighting-8001"/>
+			<item value="citycloud-zuul-geteway-9002"/>
+			<item value="citycloud-consumer-hystrix-dashboard"/>
+			<item value="citycloud-eureka-7001"/>
+			<item value="testcloud-consumer-hystrix-dashboard"/>
+			<item value="testcloud"/>
+			<item value="testcloud-provider-dept-hystrix-8001"/>
+			<item value="testcloud-provider-dept-8003"/>
+			<item value="testcloud-provider-dept-8002"/>
+		</list>
+		<list key="projectNameTemplate">
+			<item value="[artifactId]"/>
+			<item value="[artifactId]-TRUNK"/>
+			<item value="[artifactId]-[version]"/>
+			<item value="[groupId].[artifactId]"/>
+			<item value="[groupId].[artifactId]-[version]"/>
+			<item value="[name]"/>
+		</list>
+		<list key="version">
+			<item value="0.0.1-SNAPSHOT"/>
+		</list>
+	</section>
+	<section name="org.eclipse.m2e.core.pom.overview">
+		<list key="ciManagementUrl">
+		</list>
+		<list key="ciManagementSystem">
+		</list>
+		<list key="issueManagementSystem">
+		</list>
+		<list key="issueManagementUrl">
+		</list>
+	</section>
+	<section name="MavenProjectImportWizardPage">
+		<list key="rootDirectory">
+			<item value="D:\workspace\WisdomCity"/>
+			<item value="D:\workspace\citycloud"/>
+			<item value="D:\workspace\adv-demo"/>
+			<item value="D:\workspace\adv"/>
+			<item value="D:\workspace\ClientDemo-NetBeansPro"/>
+			<item value="D:\workspace\hyy"/>
+			<item value="D:\workspace\citycloud\citycloud-entity"/>
+			<item value="D:\workspace\hyy\hyy"/>
+			<item value="D:\workspace\citycloud\citycloud-lighting-8001\src\main\resources\mybatis\mapper\LightingTeamRelationMapper.xml"/>
+			<item value="D:\workspace\testcloud"/>
+			<item value="D:\workspace\git\citycloud"/>
+		</list>
+		<list key="projectNameTemplate">
+			<item value="[artifactId]"/>
+			<item value="[artifactId]-TRUNK"/>
+			<item value="[artifactId]-[version]"/>
+			<item value="[groupId].[artifactId]"/>
+			<item value="[groupId].[artifactId]-[version]"/>
+			<item value="[name]"/>
+		</list>
+	</section>
+	<section name="MavenProjectWizardArchetypePage">
+		<item value="All Catalogs" key="catalog"/>
+		<list key="projectNameTemplate">
+			<item value="[artifactId]"/>
+			<item value="[artifactId]-TRUNK"/>
+			<item value="[artifactId]-[version]"/>
+			<item value="[groupId].[artifactId]"/>
+			<item value="[groupId].[artifactId]-[version]"/>
+			<item value="[name]"/>
+		</list>
+	</section>
+	<section name="MavenModuleWizardParentPage">
+		<list key="moduleName">
+			<item value="citycloud-entity"/>
+			<item value="citycloud-lighting-8001"/>
+			<item value="citycloud-zuul-geteway-9002"/>
+			<item value="citycloud-consumer-hystrix-dashboard"/>
+			<item value="citycloud-eureka-7001"/>
+			<item value="testcloud-consumer-hystrix-dashboard"/>
+			<item value="testcloud-provider-dept-hystrix-8001"/>
+			<item value="testcloud-provider-dept-8003"/>
+			<item value="testcloud-provider-dept-8002"/>
+			<item value="test"/>
+			<item value="citycloud-other-8011"/>
+			<item value="citycloud-wireless8010"/>
+			<item value="citycloud-manhole-8009"/>
+			<item value="citycloud-trash-8009"/>
+			<item value="citycloud-alarm-8007"/>
+		</list>
+		<list key="projectNameTemplate">
+			<item value="[artifactId]"/>
+			<item value="[artifactId]-TRUNK"/>
+			<item value="[artifactId]-[version]"/>
+			<item value="[groupId].[artifactId]"/>
+			<item value="[groupId].[artifactId]-[version]"/>
+			<item value="[name]"/>
+		</list>
+	</section>
+	<section name="wizardPage">
+		<list key="groupId">
+			<item value="testcloud"/>
+		</list>
+		<list key="name">
+		</list>
+		<list key="artifactId">
+			<item value="testcloud"/>
+		</list>
+		<list key="version">
+			<item value="0.0.1-SNAPSHOT"/>
+		</list>
+	</section>
+	<section name="Maven2ProjectWizardArchifactPage">
+		<list key="package">
+			<item value="org.citycloud.entity"/>
+		</list>
+		<list key="groupId">
+			<item value="com.city.springcloud"/>
+		</list>
+		<list key="artifactId">
+			<item value="citycloud-entity"/>
+		</list>
+		<list key="projectNameTemplate">
+			<item value="[artifactId]"/>
+			<item value="[artifactId]-TRUNK"/>
+			<item value="[artifactId]-[version]"/>
+			<item value="[groupId].[artifactId]"/>
+			<item value="[groupId].[artifactId]-[version]"/>
+			<item value="[name]"/>
+		</list>
+		<list key="version">
+			<item value="0.0.1-SNAPSHOT"/>
+		</list>
+	</section>
+</section>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.listen.dao.SysTaskExpireLogDao"> 
+  
+     <select id="getSysTaskExpireLog" resultType="com.listen.model.sdkservice.SysTaskExpireLog"> 
+          SELECT * FROM sys_task_expire_log WHERE remark = #{devCodeName}
+          <if test="startTime != null and startTime != 0" > 
+              AND expire_date <![CDATA[>=]]> #{startTime} 
+          </if>
+          <if test="endTime != null and endTime != 0" > 
+              AND expire_date <![CDATA[<=]]> #{endTime} 
+          </if>
+          ORDER BY expire_log_id ASC
+     </select>
+     
+</mapper>

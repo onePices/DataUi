@@ -1,0 +1,177 @@
+/****************************      树形样式       */
+.jqx-grid{
+	border-top:1px solid #ddd;
+	border-left:none;
+	border-right:none;
+}
+
+/* 详情 */
+.itemDetailed .name{
+	color:#333;
+	padding-right: 4px;
+}
+.itemDetailed ul li {
+    float: left;
+    padding: 10px 30px 10px 0px;
+}
+
+.tabLabel .btn-default {
+    height: 34px;
+}
+
+.gradePackage .file-preview{
+	display: none;
+}
+.tabs-right>li>a{
+	position: relative;
+    background: #1c476d;
+    color:#fff;
+    overflow: inherit;
+}
+.tabs-right>li>a:hover{
+	background: #f17100;
+}
+.tabs-right>li.active>a,.tabs-right>li.active>a:focus,.tabs-right>li.active>a:hover{
+	border:none;
+    background-color: #f17100;
+    color: #fff;
+}
+.tabs-right>li.active>a:before{
+	content:"";
+	position: absolute;
+    left: -2px;
+    top: 10px;
+	border-width:10px 0px 10px 10px;
+    border-style:solid;
+    border-color:transparent transparent transparent #fff;/*透明 灰 透明 透明 */
+}
+.logContent{
+    position: relative;
+	overflow: hidden;
+}
+.logLeft{
+	width:75%;
+}
+.logRight{
+	position: relative;
+	width:23%;
+}
+.rightLogListHidden {
+    position: absolute;
+    top: 50%;
+    left: -14px;
+    z-index: 2;
+    cursor: pointer;
+    height: 88px;
+    width: 14px;
+    margin-top: -44px;
+    background-image: url(../../images/icon-rightMapListhid.png);
+    background-repeat: no-repeat;
+    background-position: 0 0;
+}
+.logFull{
+	width: 100%;
+}
+.logMenuZero{
+	width: 0%;
+}
+.formForgetWorld{
+	width: 40%;
+	margin: 30px auto;
+}
+.formForgetWorld .item{
+	position: relative;
+	height: 35px;
+	line-height: 35px;
+	margin: 20px 0px;
+}
+.formForgetWorld .title{
+	width: 155px;
+	position: absolute;
+	left: 0;
+	text-align: right;
+}
+.formForgetWorld .input{
+	position: absolute;
+	width: 100%;
+	padding:0px 18px 0px 150px;
+}
+.formForgetWorld .icon-star{
+	position: absolute;
+	right: 0px;
+	top:10px;
+	color:red;
+}
+.formForgetWorld .forget-btn{
+	margin-top: 20px;
+	text-align: center;
+}
+.datagrid-header-check input, .datagrid-cell-check input{
+	margin:0px;
+}
+
+.stepRightMenu .accordion>li {
+    margin-bottom: 4px;
+    border-radius: 0 4px 4px 0;
+    background: #1c476d;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    padding: 10px 15px;
+    color:#fff;
+    cursor: pointer;
+}
+.stepRightMenu .accordion>li.active{
+    background-color: #f17100;
+    color: #fff;
+}
+#helpNavTab>li{
+	float: inherit;
+    background: #1c476d;
+    margin-bottom: 4px;
+}
+#helpNavTab{
+	border:none;
+}
+#helpNavTab>li>a{
+	margin-right: 0;
+	border: none;
+	border-radius: inherit;
+    color: #fff;
+}
+#helpNavTab>li>a:hover{
+    background: #1c476d;
+}
+#helpNavTab>li.active a{
+    background: #f17100;
+}
+.step-list{
+	margin-bottom: 20px;
+}
+@media (max-width: 1200px) {
+
+}
+@media (max-width: 768px) {
+	.formForgetWorld{
+		width: 100%;
+	}
+}
+@media (max-width: 480px) {
+
+	/* 信息列表分页 */
+	.table-list .page .dataTables_info{
+		float:none;
+		padding:0;
+	}
+	.table-list .page .pageNum{
+		float:none;
+	}
+	
+	.col-sm-offset-4 {
+	    margin-left: 1.333333%;
+	}
+
+	.formForgetWorld{
+		width: 100%;
+	}
+
+}

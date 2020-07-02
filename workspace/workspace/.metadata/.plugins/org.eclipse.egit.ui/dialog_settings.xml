@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section name="Workbench">
+	<list key="EGit.KnownHosts">
+		<item value="git.eclipse.org"/>
+		<item value="github.com"/>
+		<item value="bitbucket.org"/>
+		<item value="gitee.com"/>
+	</list>
+	<list key="RepositorySelectionPage.UsedUris">
+		<item value="https://gitee.com/jusanluntan/WisdomCity.git"/>
+		<item value="https://gitee.com/jusanluntan/testcloud.git"/>
+		<item value="https://gitee.com/jusanluntan/citycloud.git"/>
+		<item value="file:///D:\workspace\git\citycloud"/>
+	</list>
+	<list key="CommitDialog.authorValues">
+		<item value="jusanluntan &lt;739519779@qq.com&gt;"/>
+		<item value="dell &lt;dell@DESKTOP-NETJVR1&gt;"/>
+	</list>
+	<list key="CommitDialog.committerValues">
+		<item value="jusanluntan &lt;739519779@qq.com&gt;"/>
+		<item value="dell &lt;dell@DESKTOP-NETJVR1&gt;"/>
+	</list>
+	<section name="org.eclipse.egit.ui.internal.push.PushResultDialog.dialogBounds">
+		<item value="666" key="DIALOG_WIDTH"/>
+		<item value="1|Microsoft YaHei UI|9.0|0|WINDOWS|1|-12|0|0|0|400|0|0|0|1|0|0|0|0|Microsoft YaHei UI" key="DIALOG_FONT_NAME"/>
+		<item value="464" key="DIALOG_HEIGHT"/>
+		<item value="515" key="DIALOG_X_ORIGIN"/>
+		<item value="204" key="DIALOG_Y_ORIGIN"/>
+		<list key="sashWeights">
+			<item value="600"/>
+			<item value="400"/>
+		</list>
+	</section>
+	<section name="org.eclipse.egit.ui.internal.pull.PullResultDialog.dialogBounds">
+		<item value="892" key="DIALOG_WIDTH"/>
+		<item value="1|Microsoft YaHei UI|9.0|0|WINDOWS|1|-12|0|0|0|400|0|0|0|1|0|0|0|0|Microsoft YaHei UI" key="DIALOG_FONT_NAME"/>
+		<item value="308" key="DIALOG_HEIGHT"/>
+		<item value="402" key="DIALOG_X_ORIGIN"/>
+		<item value="308" key="DIALOG_Y_ORIGIN"/>
+	</section>
+	<section name="org.eclipse.egit.ui.internal.dialogs.ReplaceTargetSelectionDialog.dialogBounds">
+		<item value="538" key="DIALOG_WIDTH"/>
+		<item value="1|Microsoft YaHei UI|9.0|0|WINDOWS|1|-12|0|0|0|400|0|0|0|1|0|0|0|0|Microsoft YaHei UI" key="DIALOG_FONT_NAME"/>
+		<item value="497" key="DIALOG_HEIGHT"/>
+		<item value="579" key="DIALOG_X_ORIGIN"/>
+		<item value="182" key="DIALOG_Y_ORIGIN"/>
+	</section>
+	<section name="org.eclipse.egit.ui.internal.dialogs.CheckoutDialog.dialogBounds">
+		<item value="538" key="DIALOG_WIDTH"/>
+		<item value="1|Microsoft YaHei UI|9.0|0|WINDOWS|1|-12|0|0|0|400|0|0|0|1|0|0|0|0|Microsoft YaHei UI" key="DIALOG_FONT_NAME"/>
+		<item value="497" key="DIALOG_HEIGHT"/>
+		<item value="579" key="DIALOG_X_ORIGIN"/>
+		<item value="182" key="DIALOG_Y_ORIGIN"/>
+	</section>
+	<section name="GitCommitMessageComponent">
+		<list key="D:\workspace\citycloud\.git">
+			<item value="empty"/>
+		</list>
+		<list key="D:\workspace\git\citycloud\.git">
+			<item value="empty"/>
+		</list>
+	</section>
+	<section name="org.eclipse.egit.ui.internal.dialogs.CompareTargetSelectionDialog.dialogBounds">
+		<item value="538" key="DIALOG_WIDTH"/>
+		<item value="1|Microsoft YaHei UI|9.0|0|WINDOWS|1|-12|0|0|0|400|0|0|0|1|0|0|0|0|Microsoft YaHei UI" key="DIALOG_FONT_NAME"/>
+		<item value="497" key="DIALOG_HEIGHT"/>
+		<item value="579" key="DIALOG_X_ORIGIN"/>
+		<item value="182" key="DIALOG_Y_ORIGIN"/>
+	</section>
+	<section name="org.eclipse.egit.ui.internal.staging.StagingView">
+		<item value="500,500" key="STAGING_SASH_FORM_WEIGHT"/>
+		<item value="false" key="sortItemState"/>
+		<item value="500,500" key="HORIZONTAL_SASH_FORM_WEIGHT"/>
+	</section>
+</section>

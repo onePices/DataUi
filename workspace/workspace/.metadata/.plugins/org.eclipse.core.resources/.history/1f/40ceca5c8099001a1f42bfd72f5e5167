@@ -1,0 +1,36 @@
+package com.web.controller;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.RestTemplate;
+
+import com.web.entity.Dept;
+
+@RestController
+public class DeptConsumerController {
+	@Autowired
+	private RestTemplate restTemplate;
+	
+	@RequestMapping(value = "/consumer/dept/add")
+	public boolean add(Dept dept) {
+		return restTemplate.postForObject("http://localhost:8001/dept/add",dept,Boolean.class);
+	}
+	
+
+	@RequestMapping(value="/consumer/dept/findById")
+	public Dept findById(@PathVariable("id") Integer id) {
+		return restTemplate.getForObject("http://localhost:8001/dept/findById"+id,Dept.class);
+	}
+	
+
+	@SuppressWarnings("unchecked")
+	@RequestMapping(value="/consumer/dept/findAll")
+	public List<Dept> findAll() {
+		return restTemplate.getForObject("http://localhost:8001/dept/findAll",List.class);
+	}
+}

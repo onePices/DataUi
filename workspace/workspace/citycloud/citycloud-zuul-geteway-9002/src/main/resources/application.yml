@@ -1,0 +1,27 @@
+server:
+  port: 9002
+  
+spring:
+  application:
+    name: citycloud-zuul-geteway
+    
+    
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:7001/eureka/
+  instance:
+    instance-id: myzuul
+    prefer-ip-address: true
+    
+         
+zuul:
+  routes:
+    citycloud-other: /**
+    
+    
+info:
+  app.name: citycloud-zuul-geteway-9002
+  company.name: www.baidu.com
+  build.artifactId: $project.artifactId$
+  build.version: $project.version$

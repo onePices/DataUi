@@ -1,0 +1,481 @@
+.jeDate input{
+	width: 100%;
+}
+.formCustom {
+	position: relative;
+}
+.formCustom span.unit{
+	position: absolute;
+    right: 44px;
+    top: 4px;
+}
+.ui-slider{
+	margin-top:10px;
+}
+/* 百度地图 */
+#allmap { width: 100%; overflow: hidden;margin-top:15px; }
+.topStaue ul li{ float: left;cursor:pointer;  padding: 0px 20px 0px 0px; }
+.topStaue .icon{ display: inline-block; width: 20px; height: 20px; background-position: center; background-repeat: no-repeat; background-size: contain; vertical-align: middle;}
+.topStaue .icon01{ background-image: url(../../images/icon-online.png); }
+.topStaue .icon02{ background-image: url(../../images/icon-fault.png); }
+.topStaue .icon03{ background-image: url(../../images/icon-offline.png); }
+.topStaue .icon04{ background-image: url(../../images/icon-unknow.png); }
+.topStaue .num{ color:#999; }
+label.BMapLabel{
+	max-width:none;
+}
+#mapPoint{
+	display: none;
+	position: absolute; 
+	top: 10px; 
+	left: 20px; 
+	z-index: 1; 
+	padding: 15px;
+	background: #fff; 
+	border-radius: 5px; 
+	box-shadow: 1px 1px 3px rgba(0,0,0,0.3);
+}
+#topSearch .search .btn{ 
+	border:1px solid #ccc; 
+	margin-left: 0px;
+	float: right;
+}
+#refresh{
+    height: 34px;
+    line-height: 34px;
+    padding: 0 10px;
+    margin:0px 10px;
+    border-radius: 5px;
+    border:1px solid #ddd;
+    cursor: pointer;
+}
+#refresh:hover{
+	background-color: #e6e6e6;
+}
+#refresh span{
+	padding-left: 5px;
+}
+.mapSpeed i{
+	color:#fff;
+}
+.mapSpeed .text{
+	height: 34px;
+	line-height: 34px;
+	padding:0px 20px;
+}
+.baiduMapInfoWin{
+	margin:0 0 5px 0;
+	padding:0.2em 0;
+    border-top: 1px solid #ddd;
+}
+.baiduMapInfoWin .green{
+	color:#16b200;
+}
+.baiduMapInfoWin .yellow{
+	color:#e1bf00;
+}
+.baiduMapInfoWin .red{
+	color:#c7010f;
+}
+.baiduMapInfoWin .blue{
+	color:#2085b3;
+}
+.baiduMapInfoWin em{
+	color:#666;
+}
+.baiduMapInfoWin .item{
+	padding:8px 0px;
+	font-size: 14px;
+}
+.baiduMapInfoWin .item a{
+	color:#333;
+}
+.baiduMapInfoWin .item a.lookTra{
+	color:#b90000;
+}
+.infoMapWin{
+	width:100px;
+	height: 100px;
+}
+.infoMapWin img{
+	width: 100%;
+	height: 100%;
+}
+#sendPlayEq {
+    border-right: 1px solid #ddd;
+    border-bottom: 1px solid #ddd;
+    border-left: 1px solid #ddd;
+    position: absolute;
+    left: 0px;
+}
+.sidlerBox{
+    width: 70%;
+    height: 70%;
+    margin: 20px auto;
+}
+.carousel-control{
+    background-size: 20%;
+}
+.carousel-control.left{
+	background-image: url(../../images/icon-slideL.png);
+	background-repeat: no-repeat;
+	background-position: center;
+	background-color:rgba(0,0,0,.5);
+}
+.carousel-control.right{
+	background-image: url(../../images/icon-slideR.png);
+	background-repeat: no-repeat;
+	background-position: center;
+	background-color:rgba(0,0,0,.5);
+}
+.screenEq{
+	text-align: center;
+}
+.screenEq h2{
+	font-size: 16px;
+}
+.tpMsg p{
+	padding: 15px;
+}
+.carousel-custom{
+	width: 100%;    
+    right: 0; 
+    bottom: 0px;
+    left: 0; 
+    padding-top: 10px;
+    padding-bottom: 10px;
+    background: rgba(0,0,0,.5);
+}
+.formCheckBox{
+	vertical-align: middle;
+}
+.periodTimeGroup{
+	display: none;
+}
+.groupChooseTime{
+	display: none;
+}
+.formLineEq{
+	padding-top:10px;
+	border-bottom:1px solid #f5f5f5;
+}
+.formCheckBoxR{
+	height: 34px;
+	line-height: 34px;
+}
+.formCheckBoxR input{
+	margin-top:10px;
+}
+.eqListContLeft{
+	position: relative;
+	width:23%;
+}
+.eqListContRight{
+	width: 75%;
+}
+.rightMapListHidden {
+    position: absolute;
+    top: 50%;
+    right: -14px;
+    z-index: 2;
+    cursor: pointer;
+    height: 88px;
+    width: 14px;
+    margin-top: -44px;
+    background-image: url(../../images/icon-sidebarhid.png);
+    background-repeat: no-repeat;
+    background-position: -14px 0;
+}
+.widthFull{
+	width: 99%;
+}
+.widthZero{
+	width:0;
+}
+.table-list .tab-btn{
+	margin-top:0;
+}
+/*.container-fluid{
+	position: relative;
+	overflow: hidden;
+	 overflow-y:auto;  
+}*/
+/* 设备详情 */
+.prosprow {
+    color: #555;
+    border: none;
+    border-bottom: solid 1px #f6f7f8;
+}
+.sptdleft {
+    text-align: right;
+    color: #000;
+    padding-right: 15px;
+    vertical-align: top;
+    line-height: 45px;
+}
+.sptdright {
+    text-align: left;
+    color: #777;
+    padding-left: 15px;
+    vertical-align: middle;
+    word-wrap: break-word;
+    word-break: normal;
+    border-left: solid 1px #f0f1f3;
+    line-height: 45px;
+}
+#detTermInp{
+	border: 1px solid #E0E0E0;
+    margin: 5px;
+    width: 240px;
+}
+.detBtn{
+	height: 34px;
+    margin: 5px 5px 5px 10px;
+	padding:0px 10px 0px 10px;
+	cursor: pointer;
+	line-height: 34px;
+	border:1px solid #E0E0E0;
+	border-radius: 5px;
+}
+.detBtn:hover{
+	background: #EFEFEF;
+}
+.ui-slider {
+    margin-top: 10px;
+}
+.groupNone{
+	display: none;
+}
+.mapTopSet{
+	margin-right:10px;
+}
+.detailTable{
+    margin: 10px;
+    max-height: 194px;
+    overflow: hidden;
+    overflow-y: auto;
+}
+.detail-view{
+	background:#EFEFEF;
+}
+.detail-view:hover{
+	background:#EFEFEF;
+}
+.detail-view:hover >td{
+	background:#EFEFEF !important;
+}
+
+#deviceTopBtn .insideBtn{
+    margin: 0px 4px 8px 4px;
+}
+.strategy-input{
+	padding-right: 54px;
+}
+.strategy-input .strategy-unit{
+	position: absolute;
+	right:22px;
+	height: 30px;
+	line-height: 30px;
+}
+.panel-body .form-group .leftLabel{
+    line-height: 30px;
+    white-space: nowrap;
+}
+.searchDevice{
+	display: none;
+	position: absolute;
+	top: 10px;
+	right: 15px;
+    width: 276px;
+    height: 250px;
+	z-index: 1;
+	padding: 4px;
+	background: #fff;
+    -webkit-box-shadow: 1px 1px 3px rgba(0,0,0,0.3);
+    -moz-box-shadow: 1px 1px 3px rgba(0,0,0,0.3);
+    -ms-box-shadow: 1px 1px 3px rgba(0,0,0,0.3);
+    -o-box-shadow: 1px 1px 3px rgba(0,0,0,0.3);
+    box-shadow: 1px 1px 3px rgba(0,0,0,0.3);
+    overflow: hidden;
+}
+.searchDevice .title{
+    position: relative;
+    padding: 0px 10px;
+    height: 30px;
+    line-height: 30px;
+    background-color: #F9F9F9;
+    margin-bottom: 4px;
+}
+.searchDevice .close {
+    position: absolute;
+    right: 0;
+    background: #999;
+    color: #FFFFFF;
+    padding: 2px 4px;
+    opacity: 1;
+}
+.searchDevice ul{
+    height: 208px;
+    overflow: hidden;
+    overflow-y: auto;
+}
+.searchDevice li{
+	border-bottom: 1px solid #ddd;
+	padding:4px 10px; 
+}
+.searchDevice li:hover{
+	cursor: pointer;
+	background: #eee;
+}
+.carousel-caption{
+background:rgba(0,0,0,.5);
+}
+#tabMapIn{
+	position: relative;
+}
+#baiduMapView{
+	min-height: 600px
+}
+#change-map{
+    position: absolute;
+    left: 10px;
+    z-index: 1;
+    padding: 10px;
+}
+#change-map select{
+	border: none;
+    padding: 15px;
+    box-shadow: 1px 1px 3px rgba(0,0,0,0.3);
+}
+
+.map-msg-layout{
+	display: none;
+	position: absolute;
+	top: 70px;
+	left: 10px;
+	width: 280px;
+	height: 300px;
+	z-index: 1;
+	box-shadow: 2px 0px 10px #888888;
+	border-radius: 10px;
+	background: #ffffff;
+}
+.map-msg-layout>.title{
+	position: relative;
+	height: 40px;
+	padding: 0px 10px;
+	color:#ffffff;
+	line-height: 40px;
+	background: #f17100;
+	border-top-left-radius: 10px;
+	border-top-right-radius: 10px;
+}
+.map-msg-layout .close{
+	position: absolute;
+	right: 10px;
+	top: 10px;
+}
+.map-msg-layout>.cont{
+	padding: 10px;
+}
+.map-msg-layout .cont .info{
+	margin: 5px 0px;
+}
+.map-msg-layout .cont .time{
+	margin: 10px 0px;
+}
+.amap-marker-label {
+    padding:0px 5px;
+    border:1px solid #dddddd;
+    border-radius: 5px;
+    box-shadow: 0px 0px 4px 0px #7b7b7b;
+    font-size: 14px;
+    border: none;
+    width: auto;
+    line-height: 26px;
+    text-align: center;
+}
+.send-eq-list{
+	margin-bottom: 10px;
+}
+.send-eq-list .item{
+	margin: 5px;
+	padding: 4px;
+	line-height: 30px;
+	border-radius: 5px;
+	background: #b6d5ef;
+}
+.send-eq-list .title{
+	padding-right: 6px;
+}
+.send-eq-list .fa{
+	cursor: pointer;
+	color: #f76b00;
+}
+.send-eq-title{
+	height: 25px;
+	line-height: 25px;
+}
+
+.videoHlsModal-btn{
+	margin: 10px 0px;
+}
+.videoHlsModal-btn i{
+	color: #ffffff;
+}
+.videoHlsModal-btn .v-btn{
+	margin-right: 6px;
+}
+@media (max-width:1660px){
+
+	.mapSpeed{
+		float: inherit;
+	}
+	#topSearch{
+		float: inherit;
+		margin-bottom: 10px;
+	}
+	#topSearch .item{
+		margin-bottom: 10px;
+	}
+
+}
+@media (max-width: 1200px) {
+
+}
+
+@media (max-width: 1190px) {
+
+	#topSearch{
+		width: 292px;
+	}
+
+	/* .mapTopSet{
+		margin:10px 0px;
+	} */
+	
+	#refresh{
+		margin:0px;
+	}
+
+}
+@media (max-width: 768px) {
+
+}
+@media (max-width: 480px) {
+
+	#sendPlayEq{
+	    position: relative;
+	    width: 100%;
+	    height: 300px;
+	    float: none;
+	}
+	.rightMapListHidden{
+		display: none;
+	}
+	.eqListContRight{
+		width: 100%;
+		float: none;
+	}
+
+}

@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop" 
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/aop   
+				        http://www.springframework.org/schema/aop/spring-aop-4.1.xsd
+				        http://www.springframework.org/schema/beans
+						http://www.springframework.org/schema/beans/spring-beans-4.1.xsd
+						http://www.springframework.org/schema/mvc
+						http://www.springframework.org/schema/mvc/spring-mvc-4.1.xsd
+						http://www.springframework.org/schema/context
+						http://www.springframework.org/schema/context/spring-context-4.1.xsd
+						http://www.springframework.org/schema/tx 
+						http://www.springframework.org/schema/tx/spring-tx.xsd">
+
+    <!-- 设备管理模块连接池配置 -->
+    <bean id="sdkServiceDataSource" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">
+        <property name="driverClassName" value="${sdkService_jdbc_driver}"></property>
+        <property name="url" value="${sdkService_jdbc_url}" />
+	    <property name="username" value="${sdkService_jdbc_username}" />
+	    <property name="password" value="${sdkService_jdbc_password}" />
+	    <property name="filters" value="stat" />
+	    <property name="maxActive" value="20" />
+	    <property name="initialSize" value="1" />
+	    <property name="maxWait" value="60000" />
+	    <property name="minIdle" value="1" />
+	    <property name="timeBetweenEvictionRunsMillis" value="60000" />
+	    <property name="minEvictableIdleTimeMillis" value="300000" />
+	    <property name="validationQuery" value="SELECT 'x'" />
+	    <property name="testWhileIdle" value="true" />
+	    <property name="testOnBorrow" value="false" />
+	    <property name="testOnReturn" value="false" />
+	    <property name="poolPreparedStatements" value="true" />
+	    <property name="maxPoolPreparedStatementPerConnectionSize" value="50" />
+    </bean>  
+    
+    <!-- spring和MyBatis完美整合，不需要mybatis的配置映射文件   -->
+    <bean id="sdkServiceSqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">  
+        <property name="dataSource" ref="sdkServiceDataSource" />  
+        <!-- 自动扫描mapping.xml文件  -->
+        <property name="configLocation" value="classpath:mapper/sdkServiceMapper-config.xml" ></property>
+        <property name="plugins">
+            <array>
+                <bean class="com.github.pagehelper.PageHelper">
+                    <property name="properties">
+                        <value>
+                            dialect=mysql
+                        </value>
+                    </property>
+                </bean>
+            </array>
+        </property>
+    </bean>  
+    
+    <!-- DAO接口所在包名，Spring会自动查找其下的类  -->
+    <bean class="tk.mybatis.spring.mapper.MapperScannerConfigurer">
+	    <property name="basePackage" value="com.listen.dao"/>
+	    <property name="properties">
+	        <value>
+	            mappers=tk.mybatis.mapper.common.Mapper
+	        </value>
+	    </property>
+	    <property name="sqlSessionFactoryBeanName" value="sdkServiceSqlSessionFactory"></property> 
+	</bean>
+    
+    <!-- (事务管理)transaction manager, use JtaTransactionManager for global tx   -->
+    <bean id="sdkServiceTransactionManager"  
+        class="org.springframework.jdbc.datasource.DataSourceTransactionManager">  
+        <property name="dataSource" ref="sdkServiceDataSource" />
+        <property name="globalRollbackOnParticipationFailure" value="false" />
+    </bean>  
+    
+    <tx:advice id="sdkServiceTxAdvice" transaction-manager="sdkServiceTransactionManager">  
+        <tx:attributes>  
+            <!-- 开启新事务  -->  
+            <tx:method name="update*" propagation="REQUIRES_NEW"  rollback-for="Exception"/>  
+        	<tx:method name="insert*" propagation="REQUIRES_NEW"   rollback-for="Exception"/>
+        	<tx:method name="save*" propagation="REQUIRES_NEW"   rollback-for="Exception"/>
+        	<tx:method name="del*" propagation="REQUIRES_NEW"  rollback-for="Exception"/>
+        	<tx:method name="copy*" propagation="REQUIRES_NEW"  rollback-for="Exception"/>
+        	<tx:method name="send*" propagation="REQUIRES_NEW"  rollback-for="Exception"/>
+        	<tx:method name="issued*" propagation="REQUIRES_NEW"  rollback-for="Exception"/>
+        </tx:attributes>  
+    </tx:advice>  
+      
+    <aop:config>  
+        <aop:pointcut id="sdkServiceTransactionPointcut" expression="execution(* com.listen.service.impl.*.*(..))||execution(* com.listen.service.impl.*.*(..))"/>  
+        <aop:advisor advice-ref="sdkServiceTxAdvice" pointcut-ref="sdkServiceTransactionPointcut"/>  
+    </aop:config> 
+    
+    <tx:annotation-driven transaction-manager="deviceTransactionManager" proxy-target-class="true"/>
+    
+</beans>

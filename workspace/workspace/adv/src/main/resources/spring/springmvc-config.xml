@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:context="http://www.springframework.org/schema/context" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+	http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd
+	http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.0.xsd
+	http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.0.xsd
+	http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd
+	http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.0.xsd">
+	
+	<mvc:default-servlet-handler />
+	<!-- 启动注解 -->
+	<mvc:annotation-driven>
+		<mvc:message-converters>
+			<bean class="org.springframework.http.converter.StringHttpMessageConverter">
+				<constructor-arg index="0" value="UTF-8"/>
+			</bean>
+		</mvc:message-converters>
+	</mvc:annotation-driven>
+	<!-- 配置扫描器，使得@Controller注解生效 -->
+	<context:component-scan base-package="com.listen.controller"/>
+	<mvc:interceptors>
+		<mvc:interceptor>
+			<mvc:mapping path="/**" />
+			<bean class="com.listen.filter.CheckSessionFilter" >
+				<property name="uncheckUrls"> 
+                    <list>
+                         <value>/ListenSdkService/sdkNew/loginIn</value>
+                         <value>/ListenSdkService/sdkNew/logout</value>
+                         <value>/ListenSdkService/</value>
+                         <value>/ListenSdkService/changeLang</value>
+                         <value>/ListenSdkService/v1.0.0/*</value>
+                         <value>/ListenSdkService/sdk/*</value>
+                         <value>/ListenSdkService/map/getPic.fgl</value>
+                     </list> 
+               </property>
+			</bean>
+		</mvc:interceptor>
+	</mvc:interceptors>
+	
+	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="prefix" value="/page/"/>
+		<property name="suffix" value=".jsp"/>
+	</bean>
+	
+	<!-- 定义文件上传解析器 -->
+	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<!-- 设定默认编码 -->
+		<property name="defaultEncoding" value="utf-8"/>
+		<!-- 设定文件上传的最大值为5MB，10000*1024*1024 -->
+		<property name="maxUploadSize" value="10485760000"/>
+		<!-- 设定文件上传时写入内存的最大值，如果小于这个参数不会生成临时文件，默认为10240 -->
+		<property name="maxInMemorySize" value="40960"/>
+	</bean>
+	
+	<mvc:default-servlet-handler/>
+	
+</beans>

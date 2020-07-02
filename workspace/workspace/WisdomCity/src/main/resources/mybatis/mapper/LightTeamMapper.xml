@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.web.dao.LightTeamMapper">
+
+  <resultMap id="BaseResultMap" type="com.web.entity.LightTeam">
+    <id column="id" property="id" />
+    <result column="name" property="name" />
+    <result column="parentid" property="parentid" />
+    <result column="strategyid" property="strategyid" />
+    <result column="level" property="level" />
+    <result column="position" property="position" />
+    <result column="inchargeof" property="inchargeof" />
+    <result column="description" property="description" />
+  </resultMap>
+  
+
+  
+  <sql id="Base_Column_List">
+    id, name, parentid, strategyid, level, position, inchargeof, description
+  </sql> 
+  
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select <include refid="Base_Column_List" /> from light_team where id = #{id}
+  </select>
+  
+  <select id="selectLightTeamByPage" parameterType="com.web.entity.LightTeam" resultMap="BaseResultMap">
+    select * from light_team where 1=1
+     <if test="name != null">
+        and name like #{name}
+      </if>
+      <if test="parentid != null">
+        and parentid = #{parentid}
+      </if>
+      <if test="strategyid != null">
+        and strategyid=#{strategyid}
+      </if>
+      <if test="level != null">
+        and level = #{level}
+      </if>
+      limit #{firstResult},#{pageSize}
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from light_team where id = #{id}
+  </delete>
+  
+  <insert id="insert" parameterType="com.web.entity.LightTeam">
+    insert into light_team (name,parentid,strategyid,level,position,inchargeof,description) values (#{name},#{parentid},#{strategyid},#{level},#{position},#{inchargeof},#{description})
+  </insert>
+  
+  <update id="updateByPrimaryKeySelective" parameterType="com.web.entity.LightTeam">
+    update light_team
+    <set>
+      <if test="name != null">
+        name = #{name},
+      </if>
+      <if test="parentid != null">
+        parentid = #{parentid},
+      </if>
+      <if test="strategyid != null">
+        strategyid = #{strategyid},
+      </if>
+      <if test="level != null">
+        level = #{level},
+      </if>
+      <if test="position != null">
+        position = #{position},
+      </if>
+      <if test="inchargeof != null">
+        inchargeof = #{inchargeof},
+      </if>
+      <if test="description != null">
+        description = #{description},
+      </if>
+    </set>
+    where id = #{id}
+  </update>
+  
+  <update id="updateByPrimaryKey" parameterType="com.web.entity.LightTeam">
+    update light_team set name = #{name},
+      parentid = #{parentid},
+      strategyid = #{strategyid},
+      level = #{level},
+      position = #{position},
+      inchargeof = #{inchargeof},
+      description = #{description}
+    where id = #{id}
+  </update>
+  
+ <update id="updateByStrategyid" parameterType="java.lang.Integer">
+    update light_team set strategyid = #{strategyid} where strategyid = #{strategyid}
+  </update>
+  
+</mapper>

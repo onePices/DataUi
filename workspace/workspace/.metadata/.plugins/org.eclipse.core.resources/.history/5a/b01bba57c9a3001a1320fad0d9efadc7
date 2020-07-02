@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.web.dao.LightingIntelMapper">
+  <resultMap id="BaseResultMap" type="com.web.entity.LightingIntel">
+    <id column="id" property="id" />
+    <result column="type" property="type" />
+    <result column="voltage" property="voltage" />
+    <result column="current" property="current" />
+    <result column="power" property="power" />
+    <result column="brand" property="brand" />
+    <result column="manufacturer" property="manufacturer" />
+    <result column="purchasedate" property="purchasedate" />
+    <result column="launchdate" property="launchdate" />
+    <result column="warrantyperiod" property="warrantyperiod" />
+    <result column="longitude" property="longitude" />
+    <result column="latitude" property="latitude" />
+    <result column="inchargeof" property="inchargeof" />
+    <result column="description" property="description" />
+  </resultMap>
+  
+
+  
+  <sql id="Base_Column_List">
+    id, type, voltage, current, power, brand, manufacturer, purchasedate, launchdate, warrantyperiod, longitude, latitude, inchargeof, description
+  </sql>
+  
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select <include refid="Base_Column_List" /> from lighting_Intel where id = #{id}
+  </select>
+  
+  <select id="countLightingIntelNum" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+    select count(id) from lighting_Intel where inchargeof=#{inchargeof}
+  </select>
+  
+  <select id="selectAllByInchargeof" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select * from lighting_Intel where inchargeof=#{inchargeof}
+  </select>
+  
+  
+  <select id="countLightingIntelstatus" parameterType="java.util.Map" resultType="java.lang.Integer">
+  		select count(id) from (select lighting_intel_record.id from lighting_intel_record inner join lighting_intel
+  		 on lighting_intel_record.lightid=lighting_intel.id where inchargeof=#{inchargeof} and intelstatus=#{intelstatus} 
+  		 ORDER BY lighting_intel_record.id desc limit 0,#{dataLength}) ii
+  </select>
+  
+  
+  <select id="countLightingIntelstatus" parameterType="java.util.Map" resultType="java.lang.Integer">
+  		select count(id) from (select lighting_intel_record.id from lighting_intel_record inner join lighting_intel
+  		 on lighting_intel_record.lightid=lighting_intel.id where inchargeof=#{inchargeof} and intelstatus=#{intelstatus} 
+  		 ORDER BY lighting_intel_record.id desc limit 0,#{dataLength}) ii
+  </select>
+  
+  
+  <select id="countLightingStatus" parameterType="java.util.Map" resultType="java.lang.Integer">
+  		select count(id) from (select lighting_intel_record.id from lighting_intel_record inner join lighting_intel
+  		 on lighting_intel_record.lightid=lighting_intel.id where inchargeof=#{inchargeof} and status=#{status} 
+  		 ORDER BY lighting_intel_record.id desc limit 0,#{dataLength}) ii
+  </select>
+    
+  
+  <select id="selectLightingIntelByPage" parameterType="com.web.entity.LightingIntel" resultMap="BaseResultMap">
+    select * from lighting_Intel where 1=1
+     <if test="type != null">
+        and type=#{type}
+      </if>
+      <if test="brand != null">
+        and brand=#{brand}
+      </if>
+      <if test="manufacturer != null">
+        and manufacturer=#{manufacturer}
+      </if>
+      <if test="warrantyperiod != null">
+        and warrantyperiod=#{warrantyperiod}
+      </if>
+      <if test="inchargeof != null">
+        and inchargeof=#{inchargeof}
+      </if>
+      <if test="launchBegin != null">
+        and launchdate &gt; launchBegin
+      </if>
+      <if test="launchEnd != null">
+        and launchdate &lt; launchEnd
+      </if>
+      limit #{firstResult},#{pageSize}
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from lighting_Intel where id = #{id}
+  </delete>
+  
+  <insert id="insert" parameterType="com.web.entity.LightingIntel">
+    insert into lighting_Intel (type, voltage, current, power, brand, manufacturer, purchasedate, launchdate, warrantyperiod, longitude, latitude, inchargeof, description)
+    values (#{type}, #{voltage}, #{current}, #{power}, #{brand}, #{manufacturer}, #{purchasedate},#{launchdate}, #{warrantyperiod}, #{longitude}, #{latitude}, #{inchargeof}, #{description})
+  </insert>
+  
+  <update id="updateByPrimaryKeySelective" parameterType="com.web.entity.LightingIntel">
+    update lighting_Intel
+    <set>
+      <if test="type != null">
+        type = #{type},
+      </if>
+      <if test="voltage != null">
+       voltage = #{voltage},
+      </if>
+      <if test="current != null">
+        current = #{current},
+      </if>
+      <if test="power != null">
+        power = #{power},
+      </if>
+      <if test="brand != null">
+        brand = #{brand},
+      </if>
+      <if test="manufacturer != null">
+        manufacturer = #{manufacturer},
+      </if>
+      <if test="purchasedate != null">
+        purchasedate = #{purchasedate},
+      </if>
+      <if test="launchdate != null">
+        launchdate = #{launchdate},
+      </if>
+      <if test="warrantyperiod != null">
+        warrantyperiod = #{warrantyperiod},
+      </if>
+      <if test="longitude != null">
+        longitude = #{longitude},
+      </if>
+      <if test="latitude != null">
+        latitude = #{latitude},
+      </if>
+      <if test="inchargeof != null">
+        inchargeof = #{inchargeof},
+      </if>
+      <if test="description != null">
+        description = #{description},
+      </if>
+    </set>
+    where id = #{id}
+  </update>
+  
+  <update id="updateByPrimaryKey" parameterType="com.web.entity.LightingIntel">
+    update lighting_Intel set type = #{type},
+      voltage = #{voltage},
+      current = #{current},
+      power = #{power},
+      brand = #{brand},
+      manufacturer = #{manufacturer},
+      purchasedate = #{purchasedate},
+      launchdate = #{launchdate},
+      warrantyperiod = #{warrantyperiod},
+      longitude = #{longitude},
+      latitude = #{latitude},
+      inchargeof = #{inchargeof},
+      description = #{description}
+    where id = #{id}
+  </update>
+  
+  
+  
+  
+  
+ 
+  
+</mapper>

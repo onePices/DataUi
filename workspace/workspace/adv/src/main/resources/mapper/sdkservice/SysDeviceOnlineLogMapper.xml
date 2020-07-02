@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.listen.dao.SysDeviceOnlineLogDao"> 
+     
+     <!-- 取出所有  (升序)-->
+     <select id="getSysDeviceOnlineLog" resultType="com.listen.model.sdkservice.SysDeviceOnlineLog"> 
+          SELECT * FROM sys_device_online_log WHERE 1=1 ORDER BY dev_log_id ASC
+     </select>
+     
+     <!-- 取出所有  (降序)-->
+     <select id="getSysDeviceOnlineLog2" resultType="com.listen.model.sdkservice.SysDeviceOnlineLog"> 
+         SELECT * FROM sys_device_online_log WHERE 1=1 
+         <if test="devCodeOrMac!='' and devCodeOrMac!=null">
+		    and (dev_code like CONCAT(#{devCodeOrMac},'%') or dev_mac like CONCAT(#{devCodeOrMac},'%'))
+	     </if>
+         ORDER BY dev_log_id DESC
+     </select>
+     
+</mapper>

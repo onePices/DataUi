@@ -1,0 +1,376 @@
+/* 上传窗口设置高度 */
+.file-drop-zone {
+}
+.file-preview{
+	max-height: 400px;
+	overflow: hidden;
+	overflow-y:auto; 
+}
+/*** 添加节目弹出窗 ****/
+.modal .time{
+    padding:10px 0px;
+}
+.showStyle{
+	display:none;
+}
+/**  频道编排  **/
+.modalTitle{
+    font-size: 14px;
+    margin:0px 0px 10px 0px;
+}
+.showTitle{
+    margin: 10px 0px;
+    color:#ef7000;
+    font-size: 15px;
+}
+#choreChannelTable{
+	/*margin-top:10px;*/
+}
+#sendPlayTree{
+	overflow: hidden;
+	overflow-y: auto;
+	min-height: 300px;
+}
+#sendPlayEq{
+    border-right: 1px solid #ddd;
+    border-bottom: 1px solid #ddd;
+    border-left: 1px solid #ddd;
+}
+.resolution select{
+	width:208px;
+}
+
+.label{
+	height: 30px;
+	font-size: 14px;
+	line-height: 30px;
+	color:#000;
+}
+/* 标签选择 */
+.tagator * {
+	box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	text-decoration: none;
+}
+#tagator_dimmer {
+	background-color: rgba(0,0,0,.1);
+	width: 100%;
+	height: 100%;
+	position: fixed;
+	z-index: 100;
+}
+.tagator {
+	border: 1px solid #abadb3;
+	border-radius: 3px;
+	box-sizing: border-box;
+	background-color: #fff;
+	display: inline-block;
+	text-decoration: none;
+}
+.tagator.options-visible {
+	position: relative;
+	z-index: 101;
+}
+.tagator_tags {
+	display: inline;
+}
+.tagator_tag {
+    display: inline-block;
+    background-color: #205E9C;
+    border-radius: 2px;
+    color: #fff;
+    padding: 0px 20px 0px 4px;
+    font-size: 13px;
+    margin: 2px;
+    position: relative;
+    height: 30px;
+    vertical-align: top;
+    line-height: 30px;
+}
+.tagator_tag_remove {
+	display: inline-block;
+	font-weight: bold;
+	color: #fff;
+	margin: 0 0 0 5px;
+	padding: 6px 5px 4px 5px;
+	cursor: pointer;
+	font-size: 11px;
+	line-height: 10px;
+	vertical-align: top;
+	border-radius: 0 2px 2px 0;
+	position: absolute;
+	right: 0;
+	top: 0;
+	bottom: 0;
+}
+.tagator_tag_remove:hover {
+	color: #000;
+	background-color: #8cf;
+}
+.tagator_input, .tagator_textlength {
+    border: 0;
+    display: inline-block;
+    margin: 0;
+    background-color: transparent;
+    font-size: 13px;
+    outline: none;
+    line-height: 32px;
+}
+.tagator_options {
+	margin: 0;
+	padding: 0;
+	border: 1px solid #7f9db9;
+	border-radius: 0 0 3px 3px;
+	font-family: sans-serif;
+	position: absolute;
+	box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	z-index: 101;
+	background-color: #fff;
+	overflow: auto;
+	max-height: 250px;
+	list-style: none;
+	left: -1px;
+	right: -1px;
+}
+.tagator.options-hidden .tagator_options {
+	display: none;
+}
+.tagator_option {
+	padding: 5px;
+	cursor: pointer;
+	color: #000;
+}
+.tagator_option.active {
+	background-color: #39f;
+	color: #fff;
+}
+
+/* 日程编辑 */
+#addScheduleDayModal .form-control{
+	width:188px;
+}
+#editerScheduleModal .form-control{
+	width:188px;
+}
+#addScheduleDayModal .leftList,#editerScheduleModal .leftList{
+	height: 350px;
+}
+#addScheduleDayModal .addShowList,#editerScheduleModal .addShowList{
+	border: 1px solid #ddd;
+    padding: 8px;
+    height: 244px;
+    overflow: auto;
+}
+#addScheduleDayModal .addShowList ul li,#editerScheduleModal .addShowList ul li{
+	padding:4px 0px;
+    border-bottom: 1px solid #ddd;
+}
+#addScheduleDayModal .addShowList ul li:hover,#editerScheduleModal .addShowList ul li:hover{
+	background: #f5f5f5;
+}
+#addScheduleDayModal .addShowList ul li:hover .mItem-r,#editerScheduleModal .addShowList ul li:hover .mItem-r{
+    display: inline-block;
+}
+#addScheduleDayModal .addShowList .mItem-l,#editerScheduleModal .addShowList .mItem-l {
+    width: 90px;
+    height: 22px;
+    word-wrap: break-word;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+#addScheduleDayModal .addShowList .mItem-r,#editerScheduleModal .addShowList .mItem-r {
+    display: none;
+}
+#addScheduleDayModal .addShowList .mItem-r a,#editerScheduleModal .addShowList .mItem-r a{
+    display: inline-block;
+}
+#addScheduleDayModal .addShowList .mItem-r a:hover,#editerScheduleModal .addShowList .mItem-r a:hover{
+    display: inline-block;
+}
+
+.tabLabel .btn-default{
+	height: 34px;
+}
+
+#choreChannel .choreEditer{
+	background: #eef1f4;padding:10px;margin-top:10px;
+}
+#choreChannel .item{
+	margin-bottom:10px; 
+}
+#choreChannel .searitem{
+    border-top: 1px solid #FFF;
+    padding-top: 10px;
+}
+#choreChannel .searitem .form-group{
+	margin-bottom:0px;
+}
+#choreChannel .searitem #deleteTschedule{
+	background: #ff6600;
+	color:#fff;
+}
+#choreChannel .addChanCont{
+    margin-top: 10px;
+}
+.file .form-control{
+	height: 38px;
+}
+.input-append input{
+	width:176px;
+}
+.channelEdSearch{
+	margin:0px 10px; 
+}
+.channelEdLable{
+	height: 34px;line-height: 34px;margin-left: 10px;
+}
+.callWaitSelect{
+	width: 98%;
+}
+/* 日程编排 */
+.schedule-right-top{
+	margin-top:32px;
+}
+.schedule-right-top .cont-btn{
+	margin-bottom:10px;
+}
+.schedule-top .cont-btn a{
+	color:#333;
+}
+#monthView,#weekView{
+	display: none;
+}
+.jeDate{
+	width:202px;
+}
+.jeDate input{
+	width:100%;
+}
+.terminalMsg{
+	width: 800px;
+	margin: 0 auto;
+}
+.prosprow {
+    color: #555;
+    border: none;
+    border-bottom: solid 1px #f6f7f8;
+}
+.sptdleft {
+    text-align: right;
+    color: #000;
+    padding-right: 15px;
+    vertical-align: top;
+    line-height: 45px;
+}
+.sptdright {
+    text-align: left;
+    color: #777;
+    padding-left: 15px;
+    vertical-align: middle;
+    word-wrap: break-word;
+    word-break: normal;
+    border-left: solid 1px #f0f1f3;
+    line-height: 45px;
+}
+#detTermInp{
+	border: 1px solid #E0E0E0;
+    margin: 5px;
+    width: 240px;
+}
+.detBtn{
+	height: 34px;
+    margin: 5px 5px 5px 10px;
+	padding:0px 10px 0px 10px;
+	cursor: pointer;
+	line-height: 34px;
+	border:1px solid #E0E0E0;
+	border-radius: 5px;
+}
+.detBtn:hover{
+	background: #EFEFEF;
+}
+.ui-slider {
+    margin-top: 10px;
+}
+.adver-saveShowModal .modalSendPlayTree{
+ 	height: 340px;
+	overflow: hidden;
+	overflow-y: auto;
+}
+.adver-saveShowModal .step-date{
+    width: 420px;
+    margin: 80px auto;
+}
+.adver-saveShowModal .step-title{
+	margin-bottom: 30px; 
+	text-align: center;
+	font-size: 18px;
+}
+.pagination-info{
+	float: none;
+}
+
+#calendar{
+	-webkit-touch-callout: none; 
+	-webkit-user-select: none; 
+	-khtml-user-select: none; 
+	-moz-user-select: none; 
+	-ms-user-select: none; 
+	user-select: none; 
+}
+
+
+.showListInfo {
+	margin-top:20px;
+  }
+  .showListInfo .showList{
+	border:1px solid #ddd;
+	height: 262px;
+	overflow:hidden;
+	overflow-y: auto;
+  }
+  .showListInfo .showList .item{
+	position: relative;
+	padding: 6px;
+	border-bottom: 1px solid #ddd;
+  }
+  .showListInfo .delete{
+	position: absolute;
+	right: 4px;
+	cursor: pointer;
+  }
+
+.schedule-top{
+	margin: 10px 0px;
+}
+.scheduleSelectItem{
+	
+}
+  
+.scheduleSelectItem .title{
+	line-height: 30px;
+	margin-right: 10px;
+}
+  
+@media (max-width: 1200px) {
+
+}
+@media (max-width: 768px) {
+	.sptdright {
+		border-left: none;
+	    border-top: solid 1px #f0f1f3;
+	    line-height: 35px;
+	}
+	.sptdleft {
+	    text-align: left;
+	    color: #000;
+	    padding-right: 0px;
+	    line-height: 45px;
+	}
+	#sendPlayTree{
+		max-height: 300px;
+	}
+}
+@media (max-width: 480px) {
+}

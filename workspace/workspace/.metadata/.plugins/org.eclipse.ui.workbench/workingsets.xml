@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<workingSetManager>
+<workingSet editPageId="org.eclipse.jdt.internal.ui.DynamicSourcesWorkingSet" factoryID="org.eclipse.ui.internal.WorkingSetFactory" id="1589355317639_0" label="Java Main Sources" name="Java Main Sources">
+<item elementID="=testcloud-provider-dept-8001/src\/main\/java" factoryID="org.eclipse.jdt.ui.PersistableJavaElementFactory"/>
+<item elementID="=testcloud-provider-dept-8001/src\/main\/resources" factoryID="org.eclipse.jdt.ui.PersistableJavaElementFactory"/>
+<item elementID="=wisdomcity&#x0A;cloud-api/src\/main\/java" factoryID="org.eclipse.jdt.ui.PersistableJavaElementFactory"/>
+<item elementID="=wisdomcity&#x0A;cloud-api/src\/main\/resources" factoryID="org.eclipse.jdt.ui.PersistableJavaElementFactory"/>
+<item elementID="=testcloud-consumer-dept-80/" factoryID="org.eclipse.jdt.ui.PersistableJavaElementFactory"/>
+</workingSet>
+<workingSet editPageId="org.eclipse.jdt.internal.ui.DynamicSourcesWorkingSet" factoryID="org.eclipse.ui.internal.WorkingSetFactory" id="1589355317651_1" label="Java Test Sources" name="Java Test Sources">
+<item elementID="=testcloud-provider-dept-8001/src\/test\/java" factoryID="org.eclipse.jdt.ui.PersistableJavaElementFactory"/>
+<item elementID="=testcloud-provider-dept-8001/src\/test\/resources" factoryID="org.eclipse.jdt.ui.PersistableJavaElementFactory"/>
+<item elementID="=wisdomcity&#x0A;cloud-api/src\/test\/java" factoryID="org.eclipse.jdt.ui.PersistableJavaElementFactory"/>
+<item elementID="=wisdomcity&#x0A;cloud-api/src\/test\/resources" factoryID="org.eclipse.jdt.ui.PersistableJavaElementFactory"/>
+</workingSet>
+<workingSet editPageId="org.eclipse.ui.resourceWorkingSetPage" factoryID="org.eclipse.ui.internal.WorkingSetFactory" id="1589356905734_3" label="testcloud" name="testcloud"/>
+<workingSet editPageId="org.eclipse.ui.resourceWorkingSetPage" factoryID="org.eclipse.ui.internal.WorkingSetFactory" id="1589423704389_4" label="citycloud" name="citycloud">
+<item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/citycloud-trash-8009" type="4"/>
+<item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/citycloud-other-8011" type="4"/>
+<item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/citycloud-screen-8004" type="4"/>
+<item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/citycloud-lighting-8001" type="4"/>
+<item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/citycloud-entity" type="4"/>
+<item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/citycloud-consumer-hystrix-dashboard" type="4"/>
+<item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/citycloud-camera-8002" type="4"/>
+<item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/citycloud-alarm-8007" type="4"/>
+<item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/citycloud-manhole-8009" type="4"/>
+<item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/citycloud-chargpost-8006" type="4"/>
+<item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/citycloud-broadcast-8003" type="4"/>
+<item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/citycloud-eureka-7001" type="4"/>
+<item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/citycloud-wireless8010" type="4"/>
+<item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/citycloud-enmon-8005" type="4"/>
+<item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/citycloud-zuul-geteway-9002" type="4"/>
+</workingSet>
+<workingSet editPageId="org.eclipse.ui.resourceWorkingSetPage" factoryID="org.eclipse.ui.internal.WorkingSetFactory" id="1590632836413_5" label="hyy-data-microservice" name="hyy-data-microservice"/>
+<workingSet editPageId="org.eclipse.ui.resourceWorkingSetPage" factoryID="org.eclipse.ui.internal.WorkingSetFactory" id="1592565767328_6" label="adv" name="adv">
+<item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/adv" type="4"/>
+</workingSet>
+<workingSet aggregate="true" factoryID="org.eclipse.ui.internal.WorkingSetFactory" id="1589355328074_2" label="Window Working Set" name="Aggregate for window 1589355328073"/>
+</workingSetManager>

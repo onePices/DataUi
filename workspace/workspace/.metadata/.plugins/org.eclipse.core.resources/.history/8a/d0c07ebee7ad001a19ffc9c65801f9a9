@@ -1,0 +1,33 @@
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Random;
+
+public class Test {
+
+	public static void main(String[] args) {
+//		String result = "[";
+//		int index = 1;
+//		for(int i=0;i<666; i++) {
+//			Double value1 = 116+Double.valueOf(String.format("%.6f", Math.random()));
+//			Double value2 = 39+Double.valueOf(String.format("%.6f", Math.random()));
+//			if(i==13 || i==29 || i==120 || i==134 || i==176 || i==203 || i==229 || i==251 || i==308 || i==337 || i==402 || i==419 || i==440 || i==457 || i==471 || i==490 || i==517|| i==535 || i==576 || i==600 || i==617)
+//				index=1;
+//			if(i==665)
+//				result+="{'lng':"+value1+",\n'lat':"+value2+",\n'count':"+index+"}]";
+//			else
+//				result+="{'lng':"+value1+",\n'lat':"+value2+",\n'count':"+index+"},\n";
+//			index++;
+//		}
+//		System.out.print(result);
+		
+		
+		Random random = new Random();
+		for(int i=0;i<666; i++) {
+			int a=random.nextInt(7);
+			System.out.println(a);
+		}
+	}
+
+}

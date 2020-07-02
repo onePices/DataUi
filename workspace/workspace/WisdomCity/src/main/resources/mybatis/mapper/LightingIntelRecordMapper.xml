@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.web.dao.LightingIntelRecordMapper">
+  <resultMap id="BaseResultMap" type="com.web.entity.LightingIntelRecord">
+    <id column="id" property="id" />
+    <result column="lightid" property="lightid" />
+    <result column="voltage" property="voltage" />
+    <result column="current" property="current" />
+    <result column="power" property="power" />
+    <result column="percent" property="percent" />
+    <result column="energyconsum" property="energyconsum" />
+    <result column="offon" property="offon" />
+    <result column="intelstatus" property="intelstatus" />
+    <result column="status" property="status" />
+    <result column="createdate" property="createdate" />
+  </resultMap>
+  
+  
+  
+  <sql id="Base_Column_List">
+    id, lightid, voltage, current, power, percent, energyconsum, offon, intelstatus, status, createdate
+  </sql>
+  
+  <select id="selectLightingIntelByPage" parameterType="com.web.entity.LightingIntelRecord" resultMap="BaseResultMap">
+    select * from lighting_intel_record where 1=1
+     <if test="lightid != null">
+        and lightid=#{lightid}
+      </if>
+      <if test="voltage != null">
+        and voltage=#{voltage}
+      </if>
+      <if test="current != null">
+        and current=#{current}
+      </if>
+      <if test="offon != null">
+        and offon=#{offon}
+      </if>
+      <if test="intelstatus != null">
+        and intelstatus=#{intelstatus}
+      </if>
+      <if test="status != null">
+        and status=#{status}
+      </if>
+      <if test="powerBegin != null">
+        and power &gt; powerBegin
+      </if>
+      <if test="powerEnd != null">
+        and power &lt; powerEnd
+      </if>
+      <if test="percentBegin != null">
+        and percent &gt; percentBegin
+      </if>
+      <if test="percentEnd != null">
+        and percent &lt; percentEnd
+      </if>
+      <if test="energyBegin != null">
+        and energyconsum &gt; energyBegin
+      </if>
+      <if test="energyEnd != null">
+        and energyconsum &lt; energyEnd
+      </if>
+      limit #{firstResult},#{pageSize}
+  </select>
+  
+  <delete id="deleteByCreatedate" parameterType="java.lang.String">
+    delete from lighting_intel_record where createdate &gt; #{createdate}
+  </delete>
+  
+  <insert id="insert" parameterType="com.web.entity.LightingIntelRecord">
+    insert into lighting_intel_record (lightid, voltage, current, power, percent, energyconsum, offon, intelstatus, status, createdate)
+    values (#{lightid}, #{voltage}, #{current}, #{power}, #{percent}, #{energyconsum}, #{offon},#{intelstatus}, #{status}, #{createdate})
+  </insert>
+  
+  
+  
+   <select id="getLightingCount" resultType="java.lang.Integer">
+	select todaytime from lighting_count
+   </select>
+  
+   
+  
+  <update id="updateLightingCount" parameterType="java.lang.Integer">
+    update lighting_count set todaytime = #{todaytime}
+  </update>
+</mapper>
