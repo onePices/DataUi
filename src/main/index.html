@@ -3,15 +3,12 @@
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 		<meta name="viewport" content="width=device-width,height=device-height,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
-		<meta name='apple-mobile-web-app-capable' content='yes'>
-		<meta name='apple-mobile-web-app-status-bar-style' content='black'>
-		<meta name='format-detection' content='telephone=no'>
 		<title>海扬物联可视化管理平台</title>
 		<link rel="stylesheet" type="text/css" href="../lib-master/theme-chalk/index.css" />
 		<link rel="stylesheet" type="text/css" href="../css/index.css" />
 		<link rel="stylesheet" type="text/css" href="../css/demo-center.css" />
 		<link rel="stylesheet" type="text/css" href="../css/video-js.min.css" />
-		<link rel="stylesheet" type="text/css" href="../css/swiper.min.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/swiper.min.css" />
 	</head>
 	<body class="bodys">
 		<div id="app" class="container">
@@ -69,28 +66,29 @@
 												<div class="list_item">
 													<div class="list_left">
 														<div class="border_box">
-														<img src="../img/Trash.png">
-														<span>垃圾桶事件</span>
-															
+															<img src="../img/Trash.png">
+															<span>垃圾桶事件</span>
+
 														</div>
-														
+
 													</div>
 													<div class="list_right">
-													<div class="right_top">
-														<div class="right_item">
-															<span>已处理:</span>
-															<b>500<i>起</i></b>
+														<div class="right_top">
+															<div class="right_item">
+																<span>已处理:</span>
+																<b>500<i>起</i></b>
+															</div>
+															<div class="right_item">
+																<span>垃圾桶故障数:</span>
+																<span>700起</span>
+															</div>
+															<div class="clear"></div>
 														</div>
-														<div class="right_item">
-															<span>垃圾桶故障数:</span>
-															<span>700起</span>
-														</div>		
-														<div class="clear"></div>
-													</div>
-													<div class="right_bottom">
-														<span class="percent">已处理{{percent}}%</span>
-														<el-progress :percentage="percent" :show-text="false" :stroke-linecap="linecap" :stroke-width="10" :color="customColors"></el-progress>
-													</div>
+														<div class="right_bottom">
+															<span class="percent">已处理{{percent}}%</span>
+															<el-progress :percentage="percent" :show-text="false" :stroke-linecap="linecap" :stroke-width="10"
+															 :color="customColors"></el-progress>
+														</div>
 													</div>
 													<div class="clear"></div>
 												</div>
@@ -98,28 +96,29 @@
 												<div class="list_item">
 													<div class="list_left">
 														<div class="border_box">
-														<img src="../img/well.png">
-														<span>井盖事件</span>
-															
+															<img src="../img/well.png">
+															<span>井盖事件</span>
+
 														</div>
-														
+
 													</div>
 													<div class="list_right">
-													<div class="right_top">
-														<div class="right_item">
-															<span>已处理:</span>
-															<b>22<i>起</i></b>
+														<div class="right_top">
+															<div class="right_item">
+																<span>已处理:</span>
+																<b>22<i>起</i></b>
+															</div>
+															<div class="right_item">
+																<span>井盖故障数:</span>
+																<span>120起</span>
+															</div>
+															<div class="clear"></div>
 														</div>
-														<div class="right_item">
-															<span>井盖故障数:</span>
-															<span>120起</span>
-														</div>		
-														<div class="clear"></div>
-													</div>
-													<div class="right_bottom">
-														<span class="percent">已处理{{percents}}%</span>
-														<el-progress :percentage="percents" :show-text="false" :stroke-linecap="linecap" :stroke-width="10" :color="customColors"></el-progress>
-													</div>
+														<div class="right_bottom">
+															<span class="percent">已处理{{percents}}%</span>
+															<el-progress :percentage="percents" :show-text="false" :stroke-linecap="linecap" :stroke-width="10"
+															 :color="customColors"></el-progress>
+														</div>
 													</div>
 													<div class="clear"></div>
 												</div>
@@ -138,22 +137,20 @@
 											</div>
 											<div class="pie_pop">
 												<el-form ref="consumption" :model="consumption" label-width="80px">
-														<el-form-item>
-															<el-checkbox-group v-model="consumption.type">
-																<el-checkbox v-for="(item, index) in statistics" :label="index">{{item}}</el-checkbox>
-												
-															</el-checkbox-group>
-														</el-form-item>
-														<el-form-item>
-															<div class="btnBox">
-																<el-button type="" class="abolish"  @click="callOff" size="mini">取消</el-button>
-																<el-button type="primary" @click="ensure" size="mini">确定</el-button>
-															</div>
-															
-												
-													</el-form>
-													<input type="hidden" name="type" id="types" value="" />
-											</div>	
+													<el-form-item>
+														<el-checkbox-group v-model="consumption.type">
+															<el-checkbox v-for="(item, index) in statistics" :label="index">{{item}}</el-checkbox>
+
+														</el-checkbox-group>
+													</el-form-item>
+													<el-form-item>
+														<div class="btnBox">
+															<el-button type="" class="abolish" @click="callOff" size="mini">取消</el-button>
+															<el-button type="primary" @click="ensure" size="mini">确定</el-button>
+														</div>
+												</el-form>
+												<input type="hidden" name="type" id="types" value="" />
+											</div>
 										</div>
 									</li>
 									<div class="clear"></div>
@@ -161,107 +158,110 @@
 							</div>
 						</el-col>
 						<el-col :span="11">
-							<div  class="grid-content ul_box">
-											
-											<div class="main_middle">
-												<img class="screen" src="../img/screen.png">
-												<div class="dimension">
-													<span class="shapes inChecked">地图</span>
-													<span class="modeling">三维</span>
-													<div class="clear"></div>
-												</div>
-												<div class="map_box">
-													<!-- <img class="bgMap" src="../img/map.png" > -->
+							<div class="grid-content ul_box">
 
-													<div id="container" style="width: 100%;height: 100%;"></div>
+								<div class="main_middle">
+									<img class="screen" src="../img/screen.png">
+									<div class="dimension">
+										<span class="shapes inChecked">地图</span>
+										<span class="modeling">三维</span>
+										<div class="clear"></div>
+									</div>
+									<div class="map_box">
+										<!-- <img class="bgMap" src="../img/map.png" > -->
 
-													<div class="input-card" style="display: none;">
-														<div class="box_top">
-															<img class="cancel" src="../img/cancel.png" />
-															<div class="clear"></div>
-														</div>
-														<div class="check-box">
-															<el-form ref="form" :model="form" label-width="80px">
-																<el-form-item>
-																	<el-checkbox-group v-model="form.type">
-																		<el-checkbox v-for="(name, index) in chooses" :label="index">{{name}}</el-checkbox>
+										<div id="container" style="width: 100%;height: 100%;"></div>
 
-																	</el-checkbox-group>
-																</el-form-item>
-																<el-form-item>
-																	<el-button type="primary" id="btn_box" @click="onSubmit">确定</el-button>
-
-															</el-form>
-															<input type="hidden" name="type" id="types" value="" />
-														</div>
-
-													</div>
-												</div>
-
+										<div class="input-card" style="display: none;">
+											<div class="box_top">
+												<img class="cancel" src="../img/cancel.png" />
+												<div class="clear"></div>
 											</div>
-											<div class="main_bottom">
-												<div class="bottom_box">
-													<template>
-														<el-table :data="tableData" :row-class-name="tableRow" style="width: 100%;">
-															<el-table-column label="序号" type="index" width="45" align="center">
-															</el-table-column>
-															<el-table-column prop="equipment" width="69" label="故障设备">
-															</el-table-column>
+											<div class="check-box">
+												<el-form ref="form" :model="form" label-width="80px">
+													<el-form-item>
+														<el-checkbox-group v-model="form.type">
+															<el-checkbox v-for="(name, index) in chooses" :label="index">{{name}}</el-checkbox>
 
+														</el-checkbox-group>
+													</el-form-item>
+													<el-form-item>
+														<el-button type="primary" id="btn_box" @click="onSubmit">确定</el-button>
 
-															</el-table-column>
-															<el-table-column prop="number" width="60" label="编号">
-															</el-table-column>
-															<el-table-column prop="text" label="故障时间">
-															</el-table-column>
-															<el-table-column prop="address" width="125" label="地址">
-															</el-table-column>
-															<el-table-column prop="content" width="70" label="告警内容">
-															</el-table-column>
-															<el-table-column prop="level" width="45" label="等级">
-															</el-table-column>
-															<el-table-column prop="Treatment"  width="116" label="处理建议">
-															</el-table-column>
-															<el-table-column prop="related" width="78" label="相关人员">
-															</el-table-column>
-														</el-table>
-													</template>
-
-												</div>
-
+												</el-form>
+												<input type="hidden" name="type" id="types" value="" />
 											</div>
+
 										</div>
+									</div>
+
+								</div>
+								<div class="main_bottom">
+									<div class="bottom_box">
+										<template>
+											<el-table :data="tableData" :row-class-name="tableRow" style="width: 100%;">
+												<el-table-column label="序号" type="index" width="45" align="center">
+												</el-table-column>
+												<el-table-column prop="equipment" width="69" label="故障设备">
+												</el-table-column>
+
+
+												</el-table-column>
+												<el-table-column prop="number" width="60" label="编号">
+												</el-table-column>
+												<el-table-column prop="text" label="故障时间">
+												</el-table-column>
+												<el-table-column prop="address" width="125" label="地址">
+												</el-table-column>
+												<el-table-column prop="content" width="70" label="告警内容">
+												</el-table-column>
+												<el-table-column prop="level" width="45" label="等级">
+												</el-table-column>
+												<el-table-column prop="Treatment" width="116" label="处理建议">
+												</el-table-column>
+												<el-table-column prop="related" width="78" label="相关人员">
+												</el-table-column>
+											</el-table>
+										</template>
+
+									</div>
+
+								</div>
+							</div>
 						</el-col>
 						<el-col :span="6">
 							<div class="grid-content">
 								<ul class="main_ul">
 									<li class="right_frame box2">
-										
+
 										<div class="pie_box">
 											<div class="pie_nav">
 												<span class="nav_title">耗能统计</span>
 											</div>
 											<div class="pie_item video_box">
 												<div class="monitoring" style="width: 100%;height: 100%;">
-													<video id="my-player" class="video-js vjs-default-skin vjs-big-play-centered" preload="auto"   data-setup='{}'><!-- autoplay="autoplay" loop="loop"-->
-														<source src="rtmp://rtmp01open.ys7.com/openlive/109601ca671d4538abe9dccf70a8a974" type="rtmp/flv"></source>
+													<video id="my-player" class="video-js vjs-default-skin vjs-big-play-centered" preload="auto" data-setup='{}'>
+														<!-- autoplay="autoplay" loop="loop"-->
+														<source src="rtmp://rtmp01open.ys7.com/openlive/109601ca671d4538abe9dccf70a8a974" type="rtmp/flv">
+														</source>
 
 													</video>
-													</div>
-													</div>
+												</div>
+											</div>
 											<div class="pie_img">
 												<div class="swiper-container">
 													<div class="swiper-wrapper">
 														<div v-for="(item,index) in imgs" :key="index" class="swiper-slide">
 															<img :src="item.url" class="banner_img">
-		<span class="data_tip">{{item.text}}</span>			<h4 class="img_num">{{item.number}}</h4>
+															<span class="data_tip">{{item.text}}</span>
+															<h4 class="img_num">{{item.number}}</h4>
 														</div>
 													</div>
 													<div class="swiper-button-next"></div>
 													<div class="swiper-button-prev"></div>
 												</div>
 											</div>
-											
+
 
 										</div>
 									</li>
@@ -271,17 +271,13 @@
 												<span class="nav_title">环境监测</span>
 												<div class="change_item">
 													<el-select v-model="value" @change="changeChart()">
-													    <el-option
-													      v-for="item in options"
-													      :key="item.index"
-													      :label="item.label"
-													      :value="item.value">
-													    </el-option>
-													  </el-select>
+														<el-option v-for="item in options" :key="item.index" :label="item.label" :value="item.value">
+														</el-option>
+													</el-select>
 												</div>
 											</div>
 											<div class="pie_item">
-												<div class="Titem" >
+												<div class="Titem">
 													<ul class="hot_ul" style="display: none;">
 														<li class="hot_one f1" @click="temperature"><i></i>温度</li>
 														<li class="hot_two" @click="humidity"><i></i>湿度</li>
@@ -310,10 +306,10 @@
 	<script src="../js/axios.min.js" type="text/javascript" charset="utf-8"></script>
 	<script src="../js/swiper.min.js" type="text/javascript" charset="utf-8"></script>
 	<script src="../lib-master/index.js" charset="utf-8"></script>
-	
-	<script  type="text/javascript" src="../js/maintext.js"></script>
-	<script  type="text/javascript" src="../js/video.min.js"></script>
-	<script  type="text/javascript" src="../js/videojs-flash.min.js"></script>
+
+	<script type="text/javascript" src="../js/maintext.js"></script>
+	<script type="text/javascript" src="../js/video.min.js"></script>
+	<script type="text/javascript" src="../js/videojs-flash.min.js"></script>
 	<script src="../js/data.js"></script>
 	<script type="text/javascript" src="https://webapi.amap.com/maps?v=1.4.15&key=7ab4ea4da0782fc8d35d97b24042016e&plugin=AMap.ControlBar,Map3D"></script>
 </html>
