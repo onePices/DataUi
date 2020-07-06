@@ -739,8 +739,8 @@ new Vue({
 			this.drawChart();
 		}, 500);
 		/* this.separate() */
-		this.timer = setInterval(this.drawHot, 100000000);
-		this.timers = setInterval(this.getTable, 5000);
+		this.timer =setInterval(this.drawHot,100000);
+		this.timers =setInterval(this.getTable,5000);
 
 		$(function() {
 			var viewH = $(window).height();
@@ -758,7 +758,7 @@ new Vue({
 			$(".pie_img").height(imgH);
 			$(".video_box").height(vHeight);
 			var tableH = $(".bottom_box .el-table").height();
-			var mapH = maxHeight - tableH - 38;
+			var mapH = maxHeight-tableH-40;
 			$(".main_middle").height(mapH);
 			// 设置flash路径,用于在videojs发现浏览器不支持HTML5播放器的时候自动唤起flash播放器
 			videojs.options.flash.swf = 'https://cdn.bootcss.com/videojs-swf/5.4.1/video-js.swf';
@@ -793,201 +793,188 @@ new Vue({
 			});
 		});
 		/* 绘制2D地图 */
-		function Shapes() {
-			map && map.destroy();
+		function Shapes(){
+			  map && map.destroy();
 			var map = new AMap.Map('container', {
-				zoom: 15, //级别
-				mapStyle: 'amap://styles/31f8e758bcafa2d0aa535571d1a8616e',
-				resizeEnable: true, //是否监控地图容器尺寸变化
-				rotateEnable: true,
-				pitchEnable: true,
-				center: [121.613776, 31.303634], //中心点坐标
-			});
-			/* map.setMapStyle('amap://styles/31f8e758bcafa2d0aa535571d1a8616e');	 */
-
-
-			var lnglat = lnglats1[0];
-			var marker = [];
-			var markers = [];
-
+					zoom: 15, //级别
+					mapStyle: 'amap://styles/31f8e758bcafa2d0aa535571d1a8616e',
+					resizeEnable: true, //是否监控地图容器尺寸变化
+					rotateEnable:true,
+					pitchEnable:true,
+					center: [121.613776,31.303634], //中心点坐标
+				});
+				/* map.setMapStyle('amap://styles/31f8e758bcafa2d0aa535571d1a8616e');	 */
+				 
+				
+				var lnglat = lnglats1[0];
+				var marker = [];
+				var markers = [];
+				
 			for (var i = 0; i < lnglat.length; i++) {
 				var lng = lnglat[i];
 				marker = new AMap.Marker({
-					position: new AMap.LngLat(lng[0], lng[1]),
-					icon: new AMap.Icon({
-						size: new AMap.Size(36, 50), //图标大小
-						image: "../img/icon0.png"
-					}),
-					extData: {
-						id: i + 1
-					},
-					
-				});
-				marker.on('click', function(){
-				console.log("1234")
-																		 });
-				markers.push(marker);
-			}
-			map.add(new AMap.OverlayGroup(markers));
-
-			$("#btn_box").click(function() {
-				var text = $("#types").val();
-				var array = text.split(",");
-				var colloctionTeam = [0, 1, 2, 3, 4, 6, 9];
-				var colloctionTeamIndex = 0;
-				for (var i = 0; i < array.length; i++) {
-					for (var j = 0; j < colloctionTeam.length; j++) {
-						if (array[i] == colloctionTeam[j]) {
-							colloctionTeamIndex++;
-						}
-					}
-				}
-				if (array.length == "") {
-					map.clearMap();
-					$(".input-card").hide();
-				} else {
-					$(".input-card").hide();
-					map.clearMap();
-					for (var j = 0; j < array.length; j++) {
-						if (colloctionTeamIndex > 1) {
-							var indexs = array[j];
-							var indexIcon = array[j];
-							for (var a = 0; a < colloctionTeam.length; a++) {
-								if (array[j] == colloctionTeam[a]) {
-									indexIcon = 11;
+						position: new AMap.LngLat(lng[0], lng[1]),
+						icon: new AMap.Icon({
+							size: new AMap.Size(36, 50), //图标大小
+							image: "../img/icon0.png"
+						}),
+						extData: {
+							id: i + 1
+						},
+						
+					});
+					markers.push(marker);}
+					map.add(new AMap.OverlayGroup(markers));
+				 
+				$("#btn_box").click(function() {
+								var text = $("#types").val();
+								var array = text.split(",");
+								var colloctionTeam = [0,1,2,3,4,6,9];
+								var colloctionTeamIndex = 0;
+								for(var i = 0; i<array.length; i++){
+									for(var j =0; j<colloctionTeam.length; j++){
+										if(array[i] == colloctionTeam[j]){
+											colloctionTeamIndex++;
+										}
+									}
 								}
-							}
-							var lnglat = lnglats1[indexs];
-							var marker = [];
-							var markers = [];
-							for (var i = 0; i < lnglat.length; i++) {
-								var lng = lnglat[i];
-								// 创建点实例
-								marker[i] = new AMap.Marker({
-									position: new AMap.LngLat(lng[0], lng[1]),
-									icon: new AMap.Icon({
-										size: new AMap.Size(36, 50), //图标大小
-										image: "../img/icon" + indexIcon + ".png",
-										anchor: 'bottom-center',
-										zIndex: -100
-									}),
-									extData: {
-										id: i + 1
-									}
-								});
-								marker[i].on('click', function(){
-					console.log("1234")
-																			 });
-								markers.push(marker[i]);
-								map.add(new AMap.OverlayGroup(markers));
-							};
-						} else {
-							var indexs = array[j];
-							var lnglat = lnglats1[indexs];
-							var marker = [];
-							var markers = [];
-							for (var i = 0; i < lnglat.length; i++) {
-								var lng = lnglat[i];
-								// 创建点实例
-								marker[i] = new AMap.Marker({
-									position: new AMap.LngLat(lng[0], lng[1]),
-									icon: new AMap.Icon({
-										size: new AMap.Size(36, 50), //图标大小
-										image: "../img/icon" + indexs + ".png",
-										anchor: 'bottom-center',
-										zIndex: -100
-									}),
-									extData: {
-										id: i + 1
-									}
-								});
-								 marker[i].on('click', function(e){
-												
-												alert("1234")
-											 });
+								if (array.length == "") {
+									map.clearMap();
+									$(".input-card").hide();
+								} else {
+									$(".input-card").hide();
+									map.clearMap();
+									for (var j = 0; j < array.length; j++) {
+										if(colloctionTeamIndex>1){
+											var indexs = array[j];
+											var indexIcon = array[j];
+											for(var a=0; a<colloctionTeam.length; a++){
+												if(array[j]==colloctionTeam[a]){
+													indexIcon = 11;
+												}
+											}
+											var lnglat = lnglats1[indexs];
+											var marker = [];
+											var markers = [];
+											for (var i = 0; i < lnglat.length; i++) {
+												var lng = lnglat[i];
+												// 创建点实例
+												marker[i] = new AMap.Marker({
+													position: new AMap.LngLat(lng[0], lng[1]),
+													icon: new AMap.Icon({
+														size: new AMap.Size(36, 50), //图标大小
+														image: "../img/icon" + indexIcon + ".png",
+														anchor:'bottom-center',
+														zIndex:-100
+													}),
+													extData: {
+														id: i + 1
+													}
+												});
+												markers.push(marker[i]);
+												map.add(new AMap.OverlayGroup(markers));
+											};
+										}else{
+											var indexs = array[j];
+											var lnglat = lnglats1[indexs];
+											var marker = [];
+											var markers = [];
+											for (var i = 0; i < lnglat.length; i++) {
+												var lng = lnglat[i];
+												// 创建点实例
+												marker[i] = new AMap.Marker({
+													position: new AMap.LngLat(lng[0], lng[1]),
+													icon: new AMap.Icon({
+														size: new AMap.Size(36, 50), //图标大小
+														image: "../img/icon" + indexs + ".png",
+														anchor:'bottom-center',
+														zIndex:-100
+													}),
+													extData: {
+														id: i + 1
+													}
+												});
+												markers.push(marker[i]);
+												map.add(new AMap.OverlayGroup(markers));
+											};
+										}
+										
+				
+									};
+				
+								}
 								
-								markers.push(marker[i]);
-								map.add(new AMap.OverlayGroup(markers));
-							};
-						}
-
-
-					};
-
-				}
-
-
-			});
-
+				
+							});
+							
 		};
 		/* 绘制3D地图 */
-		function modeling() {
-			map && map.destroy();//清空之前的地图
-			var map = new AMap.Map('container', {
-				zoom: 17, //级别
-				mapStyle: 'amap://styles/31f8e758bcafa2d0aa535571d1a8616e',
-				resizeEnable: true, //是否监控地图容器尺寸变化
-				rotateEnable: true,
-				pitchEnable: true,
-				pitch: 75,
-				rotation: -15,
-				viewMode: '3D', //开启3D视图,默认为关闭
-				showBuildingBlock: true,
-				buildingAnimation: true, //楼块出现是否带动画
-				expandZoomRange: true,
-				zooms: [17, 20],
-				center: [121.613776, 31.303634], //中心点坐标
-			});
-			/* map.setMapStyle('amap://styles/31f8e758bcafa2d0aa535571d1a8616e');	 */
-			map.addControl(new AMap.ControlBar({
-				showZoomBar: false,
-				showControlButton: true,
-				position: {
-					left: '-80px',
-					top: '10px'
-				}
-			}))
-			// 创建Object3DLayer图层
-			var object3Dlayer = new AMap.Object3DLayer();
-			map.add(object3Dlayer);
-			var lnglat = lnglats1[0];
-			/*var gltfDuck = []; */
-
-			map.plugin(["AMap.GltfLoader"], function() {
-				var urlDuck = 'file.gltf';
-				var paramDucks = [];
-				for (var i = 0; i < lnglat.length; i++) {
-
-					var lng = lnglat[i];
-					var paramDuck = [];
-					paramDuck[i] = {
-						position: new AMap.LngLat(lng[0], lng[1]), // 必须
-						scale: 1, // 非必须，默认1
-						height: 0, // 非必须，默认0
-						scene: 0, // 非必须，默认0
-					};
-					paramDucks.push(paramDuck[i]);
-				};
-
-
-				var gltfObj = new AMap.GltfLoader();
-				gltfObj.load(urlDuck, function(gltfDuck) {
-					for (var i = 0; i < paramDucks.length; i++) {
-						gltfDuck.setOption(paramDucks[i]);
-						gltfDuck.rotateX(90);
-						gltfDuck.rotateZ(-20);
-						object3Dlayer.add(gltfDuck);
-						 gltfDuck.on('mousemove', function () {
-							 console.log("789")
-						 });
-					}
-					
-				});
-			
-			});
-			
-		};
-	},
+			function modeling(){
+				  map && map.destroy();
+				var map = new AMap.Map('container', {
+						zoom: 17, //级别
+						mapStyle: 'amap://styles/31f8e758bcafa2d0aa535571d1a8616e',
+						resizeEnable: true, //是否监控地图容器尺寸变化
+						rotateEnable:true,
+						pitchEnable:true,
+						pitch:75,
+						rotation:-15,
+						viewMode:'3D',//开启3D视图,默认为关闭
+						  showBuildingBlock:true,
+						buildingAnimation:true,//楼块出现是否带动画
+						 expandZoomRange:true,
+						    zooms:[17,20],
+						center: [121.613776,31.303634], //中心点坐标
+					});
+					/* map.setMapStyle('amap://styles/31f8e758bcafa2d0aa535571d1a8616e');	 */
+					 map.addControl(new AMap.ControlBar({
+					    showZoomBar:false,
+					    showControlButton:true,
+					    position:{
+					      left:'-80px',
+					      top:'10px'
+					    }
+					  }))
+					 // 创建Object3DLayer图层
+					    var object3Dlayer = new AMap.Object3DLayer();
+					    map.add(object3Dlayer);	
+						 var lnglat = lnglats1[0];
+						/*var gltfDuck = []; */
+						
+						map.plugin(["AMap.GltfLoader"], function () {
+									var urlDuck = 'file.gltf';
+									var paramDucks  =[];
+						           for (var i = 0; i < lnglat.length; i++) {
+						           
+						           	var lng = lnglat[i];
+									var paramDuck =[];
+									paramDuck[i]= {
+						           	    position: new AMap.LngLat(lng[0], lng[1]), // 必须
+						           	    scale:1, // 非必须，默认1
+						           	    height: 0,  // 非必须，默认0
+						           	    scene: 0, // 非必须，默认0
+						           	};
+									paramDucks.push(paramDuck[i]);
+						      };
+								  
+								   
+						        var gltfObj = new AMap.GltfLoader();
+						          gltfObj.load(urlDuck, function (gltfDuck) {
+									  for(var i = 0; i < paramDucks.length; i++){
+									gltfDuck.setOption(paramDucks[i]);
+						            gltfDuck.rotateX(90);
+						            gltfDuck.rotateZ(-20);
+									object3Dlayer.add(gltfDuck);
+										  
+									  }
+						              
+						          });
+						         
+						         
+						
+						        });
+			};
+		},
 	mounted() {
 		//根据预览器的窗口改变宽高
 		$(window).resize(function() {
@@ -1007,7 +994,7 @@ new Vue({
 			$(".pie_img").height(imgH);
 			$(".video_box").height(vHeight);
 			var tableH = $(".bottom_box .el-table").height();
-			var mapH = maxHeight - tableH - 38;
+			var mapH = maxHeight - tableH - 40;
 			$(".main_middle").height(mapH);
 		});
 		setTimeout(() => {
