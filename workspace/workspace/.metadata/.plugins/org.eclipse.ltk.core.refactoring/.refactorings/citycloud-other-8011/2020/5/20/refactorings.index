@@ -1,8 +1,0 @@
-1589509389868	Delete element
-1589509498420	Rename type 'DeptDao'
-1589509705226	Rename type 'DeptService'
-1589509772500	Rename type 'DeptServiceImpl'
-1589509818163	Rename type 'DeptController'
-1589510178135	Rename type 'DeptProvider8001'
-1589512644307	Rename type 'OtherProvider8001'
-1589512751160	Rename resource 'DeptMapper.xml'

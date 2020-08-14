@@ -1,315 +1,564 @@
-<!DOCTYPE html>
-<html>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html  xmlns="http://www.w3.org/1999/xhtml">
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 		<meta name="viewport" content="width=device-width,height=device-height,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
-		<title>海扬物联可视化管理平台</title>
+		<meta name="keywords" content="Simple Switch,Switch,Simple,开关插件,开关,javascript,Switch jquery">
+		<meta name="description" content="Simple Switch is Switch jQuery plug-in , Author is Lukang">
+		<link rel="icon" href="favicon.ico">
+		<title>智慧杆管控平台</title>
 		<link rel="stylesheet" type="text/css" href="../lib-master/theme-chalk/index.css" />
 		<link rel="stylesheet" type="text/css" href="../css/index.css" />
 		<link rel="stylesheet" type="text/css" href="../css/demo-center.css" />
 		<link rel="stylesheet" type="text/css" href="../css/video-js.min.css" />
-		<link rel="stylesheet" type="text/css" href="../css/swiper.min.css" />
+		<link rel="stylesheet" type="text/css" href="../css/rangeslider.css" />
+		<link rel="stylesheet" type="text/css" href="../css/lc_switch.css" />
 	</head>
 	<body class="bodys">
 		<div id="app" class="container">
-			<template>
-				<div class="nav_top">
-					<el-col :span="4">
-						<div class="top_left">
-							<i class="logo"></i>
-							<span class="logo_title">应用控制台</span>
-						</div>
-					</el-col>
-					<el-col :span="16">
-						<div class="top_main">
-							<h1>智慧杆应用管理平台系统</h1>
-						</div>
-					</el-col>
-					<el-col :span="4">
-						<div class="top_right">
-							<span>{{nowTime}}</span>
-							<span>{{nowWeek}}</span>
-							<span class="data_s">{{nowDate}}</span>
-						</div>
-					</el-col>
+			<div id="allMap" style="width: 100%;height: 100%;"></div>
+			<div class="img_btn" style="display: block;">
+				<img class="screen" src="../img/screen.png">
+			</div>
+			<div class="btn_on" @click="onOff()">
+				<img src="../img/on1.gif" alt="">
+			</div>
+			
+
+
+			<div class="input-card" style="display: none;">
+				<div class="box_top">
+					<img class="cancel" src="../img/cancel.png" />
+					<div class="clear"></div>
 				</div>
-				<div class="body_box">
-					<el-row>
-						<el-col :span="6">
-							<div class="grid-content">
-								<ul class="main_ul">
-									<li class="left_frame box1">
-										<div class="pie_box">
-											<div class="pie_nav">
-												<span class="nav_title">照明数据</span>
-											</div>
-											<div class="pie_item">
-												<div class="item_list box1">
-													<div class="left_txt">灯杆总数:<i class="txt_item" v-for="(item,index) in lamp" :key="index">{{item}}</i>根</div>
-													<div class="right_txt">在线数:<i class="txt_item" v-for="(item,index) in lampOn" :key="index">{{item}}</i>根</div>
-												</div>
-												<div class="item_list box2">
-													<div class="left_txt">灯总数:<i class="txt_item" v-for="(item,index) in lights" :key="index">{{item}}</i>盏</div>
-													<div class="right_txt">亮灯数:<i class="txt_item" v-for="(item,index) in lightsOn" :key="index">{{item}}</i>盏</div>
-												</div>
-												<div class="item_list box3">
-													<div class="left_txt">总耗能数:<i class="txt_item" v-for="(item,index) in energy" :key="index">{{item}}</i>kwh</div>
-													<div class="right_txt">单日耗能:<i class="txt_item" v-for="(item,index) in energyDay" :key="index">{{item}}</i>kwh</div>
-												</div>
-											</div>
+				<div class="check-box">
+					<el-form ref="form" :model="form" label-width="80px">
+						<el-form-item>
+							<el-checkbox-group v-model="form.type">
+								<el-checkbox v-for="(name, index) in chooses" :label="index">{{name}}</el-checkbox>
 
-										</div>
-									</li>
-									<li class="left_frame box1">
-										<div class="pie_box">
-											<div class="pie_item full">
-												<div class="list_item">
-													<div class="list_left">
-														<div class="border_box">
-															<img src="../img/Trash.png">
-															<span>垃圾桶事件</span>
+							</el-checkbox-group>
+						</el-form-item>
+						<el-form-item>
+							<el-button type="primary" id="btn_box" @click="onSubmit">确定</el-button>
+						</el-form-item>
+					</el-form>
+					<input type="hidden" name="type" id="types" value="" />
+				</div>
 
-														</div>
+			</div>
 
-													</div>
-													<div class="list_right">
-														<div class="right_top">
-															<div class="right_item">
-																<span>已处理:</span>
-																<b>500<i>起</i></b>
-															</div>
-															<div class="right_item">
-																<span>垃圾桶故障数:</span>
-																<span>700起</span>
-															</div>
-															<div class="clear"></div>
-														</div>
-														<div class="right_bottom">
-															<span class="percent">已处理{{percent}}%</span>
-															<el-progress :percentage="percent" :show-text="false" :stroke-linecap="linecap" :stroke-width="10"
-															 :color="customColors"></el-progress>
-														</div>
-													</div>
-													<div class="clear"></div>
-												</div>
-												<div class="p_bottom"></div>
-												<div class="list_item">
-													<div class="list_left">
-														<div class="border_box">
-															<img src="../img/well.png">
-															<span>井盖事件</span>
-
-														</div>
-
-													</div>
-													<div class="list_right">
-														<div class="right_top">
-															<div class="right_item">
-																<span>已处理:</span>
-																<b>22<i>起</i></b>
-															</div>
-															<div class="right_item">
-																<span>井盖故障数:</span>
-																<span>120起</span>
-															</div>
-															<div class="clear"></div>
-														</div>
-														<div class="right_bottom">
-															<span class="percent">已处理{{percents}}%</span>
-															<el-progress :percentage="percents" :show-text="false" :stroke-linecap="linecap" :stroke-width="10"
-															 :color="customColors"></el-progress>
-														</div>
-													</div>
-													<div class="clear"></div>
-												</div>
-											</div>
-
-										</div>
-									</li>
-									<li class="left_frame box1">
-										<div class="pie_box">
-											<div class="pie_nav">
-												<span class="nav_title">耗能统计</span>
-												<a class="more" @click="more" href="###">查看更多</a>
-											</div>
-											<div class="pie_item">
-												<div id="energy_item" style="height: 100%;"></div>
-											</div>
-											<div class="pie_pop">
-												<el-form ref="consumption" :model="consumption" label-width="80px">
-													<el-form-item>
-														<el-checkbox-group v-model="consumption.type">
-															<el-checkbox v-for="(item, index) in statistics" :label="index">{{item}}</el-checkbox>
-
-														</el-checkbox-group>
-													</el-form-item>
-													<el-form-item>
-														<div class="btnBox">
-															<el-button type="" class="abolish" @click="callOff" size="mini">取消</el-button>
-															<el-button type="primary" @click="ensure" size="mini">确定</el-button>
-														</div>
-												</el-form>
-												<input type="hidden" name="type" id="types" value="" />
-											</div>
-										</div>
-									</li>
-									<div class="clear"></div>
-								</ul>
+			<div class="dimension">
+				<span class="shapes inChecked">地图</span>
+				<span class="modeling">三维</span>
+				<div class="clear"></div>
+			</div>
+			<div class="nav_top">
+				<el-col :span="4">
+					<div class="top_left">
+						<a title="跳转管控台" href="../../../views/index.html" class="logo"></a>
+						<span class="logo_title">应用控制台</span>
+					</div>
+				</el-col>
+				<el-col :span="16">
+					<div class="top_main">
+						<h1>智慧杆管控平台<i>copyright v2.0 </i></h1>
+					</div>
+				</el-col>
+				<el-col :span="4">
+					<div class="top_right">
+						<span class="data_s">{{nowDate}} {{nowWeek}} {{nowTime}}</span>
+					</div>
+				</el-col>
+			</div>
+			<div class="grid-content content_left" >
+				<ul class="main_ul">
+					<li class="left_frame">
+						<div class="pie_box">
+							<div class="pie_nav">
+								<p class="nav_title">设备总览</p>
 							</div>
-						</el-col>
-						<el-col :span="11">
-							<div class="grid-content ul_box">
+							<div class="pie_item">
+								<ul class="overview">
+									<li>
+										<div class="li_left">
+											<img src="../img/top1.png" class="li_img">
+										</div>
+										<div class="li_right">
+											<span>235</span>
+											<p>照明</p>
 
-								<div class="main_middle">
-									<img class="screen" src="../img/screen.png">
-									<div class="dimension">
-										<span class="shapes inChecked">地图</span>
-										<span class="modeling">三维</span>
+										</div>
 										<div class="clear"></div>
-									</div>
-									<div class="map_box">
-										<!-- <img class="bgMap" src="../img/map.png" > -->
-
-										<div id="container" style="width: 100%;height: 100%;"></div>
-
-										<div class="input-card" style="display: none;">
-											<div class="box_top">
-												<img class="cancel" src="../img/cancel.png" />
-												<div class="clear"></div>
-											</div>
-											<div class="check-box">
-												<el-form ref="form" :model="form" label-width="80px">
-													<el-form-item>
-														<el-checkbox-group v-model="form.type">
-															<el-checkbox v-for="(name, index) in chooses" :label="index">{{name}}</el-checkbox>
-
-														</el-checkbox-group>
-													</el-form-item>
-													<el-form-item>
-														<el-button type="primary" id="btn_box" @click="onSubmit">确定</el-button>
-
-												</el-form>
-												<input type="hidden" name="type" id="types" value="" />
-											</div>
+									</li>
+									<li>
+										<div class="li_left">
+											<img src="../img/top2.png" class="li_img">
+										</div>
+										<div class="li_right">
+											<span>135</span>
+											<p>视频监控</p>
 
 										</div>
-									</div>
+										<div class="clear"></div>
+									</li>
+									<li>
+										<div class="li_left">
+											<img src="../img/top3.png" class="li_img">
+										</div>
+										<div class="li_right">
+											<span>156</span>
+											<p>一键报警</p>
 
-								</div>
-								<div class="main_bottom">
-									<div class="bottom_box">
-										<template>
-											<el-table :data="tableData" :row-class-name="tableRow" style="width: 100%;">
-												<el-table-column label="序号" type="index" width="45" align="center">
-												</el-table-column>
-												<el-table-column prop="equipment" width="69" label="故障设备">
-												</el-table-column>
+										</div>
+										<div class="clear"></div>
+									</li>
+									<li>
+										<div class="li_left">
+											<img src="../img/top4.png" class="li_img">
+										</div>
+										<div class="li_right">
+											<span>85</span>
+											<p>环境监测</p>
 
+										</div>
+										<div class="clear"></div>
+									</li>
+									<li>
+										<div class="li_left">
+											<img src="../img/top5.png" class="li_img">
+										</div>
+										<div class="li_right">
+											<span>135</span>
+											<p>广播</p>
 
-												</el-table-column>
-												<el-table-column prop="number" width="60" label="编号">
-												</el-table-column>
-												<el-table-column prop="text" label="故障时间">
-												</el-table-column>
-												<el-table-column prop="address" width="125" label="地址">
-												</el-table-column>
-												<el-table-column prop="content" width="70" label="告警内容">
-												</el-table-column>
-												<el-table-column prop="level" width="45" label="等级">
-												</el-table-column>
-												<el-table-column prop="Treatment" width="116" label="处理建议">
-												</el-table-column>
-												<el-table-column prop="related" width="78" label="相关人员">
-												</el-table-column>
-											</el-table>
-										</template>
+										</div>
+										<div class="clear"></div>
+									</li>
+									<li>
+										<div class="li_left">
+											<img src="../img/top6.png" class="li_img">
+										</div>
+										<div class="li_right">
+											<span>86</span>
+											<p>显示屏</p>
 
-									</div>
+										</div>
+										<div class="clear"></div>
+									</li>
+									<li>
+										<div class="li_left">
+											<img src="../img/top7.png" class="li_img">
+										</div>
+										<div class="li_right">
+											<span>125</span>
+											<p>垃圾桶</p>
 
-								</div>
+										</div>
+										<div class="clear"></div>
+									</li>
+									<li>
+										<div class="li_left">
+											<img src="../img/top8.png" class="li_img">
+										</div>
+										<div class="li_right">
+											<span>99</span>
+											<p>井盖</p>
+
+										</div>
+										<div class="clear"></div>
+									</li>
+									<li>
+										<div class="li_left">
+											<img src="../img/top9.png" class="li_img">
+										</div>
+										<div class="li_right">
+											<span>203</span>
+											<p>其他</p>
+
+										</div>
+										<div class="clear"></div>
+									</li>
+
+									<div class="clear"> </div>
+								</ul>
 							</div>
-						</el-col>
-						<el-col :span="6">
-							<div class="grid-content">
-								<ul class="main_ul">
-									<li class="right_frame box2">
 
-										<div class="pie_box">
-											<div class="pie_nav">
-												<span class="nav_title">耗能统计</span>
-											</div>
-											<div class="pie_item video_box">
-												<div class="monitoring" style="width: 100%;height: 100%;">
-													<video id="my-player" class="video-js vjs-default-skin vjs-big-play-centered" preload="auto" data-setup='{}'>
-														<!-- autoplay="autoplay" loop="loop"-->
-														<source src="rtmp://rtmp01open.ys7.com/openlive/109601ca671d4538abe9dccf70a8a974" type="rtmp/flv">
-														</source>
+						</div>
+					</li>
+					<li class="left_frame  ">
+						<div class="pie_box">
+							<div class="pie_nav">
+								<p class="nav_title">照明数据</p>
+							</div>
+							<div class="pie_item full">
+								<div class="list_item">
+									<div id="dateT"></div>
+								</div>
+								<ul class="echartBottom">
+									<li v-for="(item,index) in shuL" :key="index">
+										<span class="">{{item.name}}</span>
+										<i>{{item.number}}{{item.date}}</i>
+									</li>
 
-													</video>
-												</div>
-											</div>
-											<div class="pie_img">
-												<div class="swiper-container">
-													<div class="swiper-wrapper">
-														<div v-for="(item,index) in imgs" :key="index" class="swiper-slide">
-															<img :src="item.url" class="banner_img">
-															<span class="data_tip">{{item.text}}</span>
-															<h4 class="img_num">{{item.number}}</h4>
-														</div>
-													</div>
-													<div class="swiper-button-next"></div>
-													<div class="swiper-button-prev"></div>
-												</div>
-											</div>
+								</ul>
+							</div>
+						</div>
+					</li>
+					<li class="left_frame">
+						<div class="pie_box">
+							<div class="pie_nav">
+								<p class="nav_title">耗能统计</p>
 
+							</div>
+							<div class="pie_item">
+								<div id="energy_item" style="height:100%;"></div>
+							</div>
+						</div>
+					</li>
+					<li class="left_frame">
+						<div class="pie_box">
+							<div class="pie_nav">
+								<p class="nav_title">环境监测</p>
+
+							</div>
+							<div class="pie_item" style="height: 90%;">
+								<ul class="environment">
+									<li>
+										<div class="itemLi">
+											<p>28℃</p>
+											<i>温度</i>
+
+										</div>
+										<div class="liImg">
+											<img src="../img/bottom1.png">
+										</div>
+									</li>
+									<li>
+										<div class="itemLi">
+											<p>35%rh</p>
+											<i>湿度</i>
+
+										</div>
+										<div class="liImg">
+											<img src="../img/bottom2.png">
 
 										</div>
 									</li>
-									<li class="right_frame box1">
-										<div class="pie_box">
-											<div class="pie_nav">
-												<span class="nav_title">环境监测</span>
-												<div class="change_item">
-													<el-select v-model="value" @change="changeChart()">
-														<el-option v-for="item in options" :key="item.index" :label="item.label" :value="item.value">
-														</el-option>
-													</el-select>
-												</div>
-											</div>
-											<div class="pie_item">
-												<div class="Titem">
-													<ul class="hot_ul" style="display: none;">
-														<li class="hot_one f1" @click="temperature"><i></i>温度</li>
-														<li class="hot_two" @click="humidity"><i></i>湿度</li>
-														<li class="hot_three" @click="PMtwo"><i></i>PM2.5</li>
-														<li class="hot_four" @click="PMten"><i></i>PM10</li>
-														<div class="clear"></div>
-													</ul>
-													<div style="display: none;" id="hotT" class="hotBox"></div>
-													<div id="lineT" class="hotBox" style="height: 100%;padding-top: 10px;"></div>
-												</div>
-											</div>
+									<li>
+										<div class="itemLi">
+											<p>101kpa</p>
+											<i>气压</i>
 
+										</div>
+										<div class="liImg">
+											<img src="../img/bottom3.png">
+										</div>
+									</li>
+									<li>
+										<div class="itemLi">
+											<p>37μg/m3</p>
+											<i>PM2.5</i>
+
+										</div>
+										<div class="liImg">
+											<img src="../img/bottom4.png">
+										</div>
+									</li>
+									<li>
+										<div class="itemLi">
+											<p>45μg/m3</p>
+											<i>PM10</i>
+
+										</div>
+										<div class="liImg">
+											<img src="../img/bottom5.png">
+										</div>
+									</li>
+									<li>
+										<div class="itemLi">
+											<p>38.2dB</p>
+											<i>噪音</i>
+
+										</div>
+										<div class="liImg">
+											<img src="../img/bottom6.png">
 										</div>
 									</li>
 								</ul>
+
+
 							</div>
-						</el-col>
-					</el-row>
+
+						</div>
+					</li>
+					<div class="clear"></div>
+				</ul>
+				
+			</div>
+			<div class="off_box left_on" >
+				<ul class="main_ul1" >
+					<li><div class="l1">
+						<i><img src="../img/f1.png" ></i>
+						<span>设<br>备<br>总<br>览</span>
+						</div></li>
+					<li><div class="l2">
+						<i><img src="../img/f2.png" ></i>
+						<span>照<br>明<br>数<br>据</span>
+						</div></li>
+					<li><div class="l1">
+						<i><img src="../img/f3.png" ></i>
+						<span>耗<br>能<br>统<br>计</span>
+						</div></li>
+					<li><div class="l1">
+						<i><img src="../img/f4.png" ></i>
+						<span>环<br>境<br>监<br>测</span>
+						</div></li>
+				</ul>
+			</div>
+			<div class="middle_bottom" >
+				<div class="grid-content ul_box">
+					<div class="main_bottom">
+						<div class="nav_bottom">
+							<p class="nav_title">告警实时信息</p>
+						</div>
+						<div class="bottom_box">
+							<template>
+								<el-table :data="tableData" style="width: 100%;" height="100%">
+
+									<el-table-column prop="device" label="告警设备" :show-overflow-tooltip="true">
+									</el-table-column>
+									<el-table-column prop="startdate" label="告警时间" :show-overflow-tooltip="true">
+									</el-table-column>
+									<el-table-column  label="告警内容" :show-overflow-tooltip="true">
+									<template slot-scope="scope">
+										<span>{{scope.row.device+scope.row.content}}</span>
+										
+									</template>	
+									</el-table-column>
+									<el-table-column prop="number" label="告警编号">
+									</el-table-column>
+									<el-table-column label="处理状态" :show-overflow-tooltip="true">
+										<template slot-scope="scope">
+
+											<el-tag v-if="scope.row.status==0" type="danger" size="mini" effect="dark">待处理</el-tag>
+											<el-tag v-if="scope.row.status==1" type="info" size="mini" effect="dark">处理中</el-tag>
+											<el-tag v-if="scope.row.status==1" effect="dark" size="mini" type="success">已处理</el-tag>
+										</template>
+									</el-table-column>
+									<el-table-column prop="stopdate" label="处理时间" :show-overflow-tooltip="true">
+									</el-table-column>
+									<el-table-column prop="adminname" label="相关人员" width="70">
+									</el-table-column>
+								</el-table>
+							</template>
+
+						</div>
+
+					</div>
 				</div>
-			</template>
+			</div>
+			<div class="bottom_on">
+				<i><img src="../img/f9.png" ></i>
+				<ul>
+					<li>故障设备</li>
+					<li>告警时间</li>
+					<li>告警内容</li>
+					<li>等级</li>
+					<li>处理状态</li>
+					<li>处理时间</li>
+					<li>相关人员</li>
+				</ul>
+			</div>
+			<div class="grid-content content_right" >
+				<ul class="main_ul">
+					<li class="right_frame  ">
+						<div class="pie_box">
+							<div class="pie_nav">
+								<p class="nav_title">垃圾桶/井盖故障统计</p>
+
+							</div>
+							<div class="pie_item full">
+								<div class="list_item">
+									<div class="list_left">
+										<div class="border_box">
+											<img src="../img/Trash.png">
+											<!-- <span>垃圾桶事件</span>
+										 -->
+										</div>
+
+									</div>
+									<div class="list_right">
+										<div class="right_top">
+											<div class="right_item">
+												<span>故障数:700起</span>
+											</div>
+											<div class="right_item team_right">
+												<span class="percent">已处理{{percent}}%</span> </div>
+											<div class="clear"></div>
+										</div>
+										<div class="right_bottom">
+
+											<el-progress :percentage="percent" :show-text="false" :stroke-linecap="linecap" :stroke-width="10" :color="customColors"></el-progress>
+										</div>
+									</div>
+									<!-- <div class="clear"></div> -->
+								</div>
+								<div class="p_bottom"></div>
+								<div class="list_item">
+									<div class="list_left">
+										<div class="border_box">
+											<img src="../img/well.png">
+											<!-- <span>井盖事件</span> -->
+
+										</div>
+
+									</div>
+									<div class="list_right">
+										<div class="right_top">
+											<div class="right_item">
+												<span>故障数:120起</span>
+											</div>
+											<div class="right_item team_right"><span class="percent">已处理{{percents}}%</span></div>
+											<div class="clear"></div>
+										</div>
+										<div class="right_bottom">
+											<el-progress :percentage="percents" :show-text="false" :stroke-linecap="linecap" :stroke-width="10" :color="customColors"></el-progress>
+										</div>
+									</div>
+
+								</div>
+							</div>
+
+						</div>
+					</li>
+					<li class="right_frame ">
+
+						<div class="pie_box">
+							<div class="pie_nav">
+								<p class="nav_title">实时监控</p>
+							</div>
+							<div class="pie_item video_box">
+								<div class="monitoring" style="width: 70%;height: 100%;">
+									<div id="playercontainer" style="margin: 0 auto;"></div>
+								</div>
+								<div class="video_right" style="width: 30%; height: 100%;">
+									<div class="vide_item">
+										<span>108</span>
+										<i>开启数</i>
+									</div>
+									<div class="vide_item">
+										<span>101</span>
+										<i>在线数</i>
+									</div>
+								</div>
+							</div>
+
+						</div>
+					</li>
+
+					<li class="right_frame  ">
+						<div class="pie_box">
+							<div class="pie_nav">
+								<p class="nav_title">告警联动</p>
+
+							</div>
+							<div class="pie_item">
+								<div class="pie_img">
+									<template>
+										<el-carousel :interval="1000" type="card" height="100%" indicator-position="none" :autoplay="false">
+											<el-carousel-item v-for="(item,index) in imgs" :key="index">
+												<el-image style="width: 100%; height: 80%" :src="item.url"></el-image>
+												<h3 class="medium">{{ item.number }}</h3>
+											</el-carousel-item>
+										</el-carousel>
+									</template>
+								</div>
+							</div>
+
+						</div>
+					</li>
+					<li class="right_frame  ">
+						<div class="pie_box">
+							<div class="pie_nav">
+								<p class="nav_title">节目预览</p>
+
+							</div>
+							<div class="pie_item">
+								<div class="preview">
+									<el-row>
+										<el-col :span="12">
+											<div class="grid-content"><span>标题：听领导人讲话</span></div>
+										</el-col>
+										<el-col :span="12">
+											<div class="grid-content" style="text-align: right;"><i class="el-icon-time
+"></i><span>01:25/05:40</span></div>
+										</el-col>
+									</el-row>
+									<img src="../img/zuxi.png" class="zuxi" style="width: 100%;">
+									<input type="checkbox" class="checkbox">
+								</div>
+
+							</div>
+
+						</div>
+					</li>
+				</ul>
+			</div>
+			<div class="off_box right_on">
+				<ul class="main_ul1" >
+					<li><div class="l1">
+						<i><img src="../img/f5.png" ></i>
+						<span>故<br>障<br>统<br>计</span>
+						</div></li>
+					<li><div class="l1">
+						<i><img src="../img/f6.png" ></i>
+						<span>实<br>时<br>监<br>控</span>
+						</div></li>
+					<li><div class="l1">
+						<i><img src="../img/f7.png" ></i>
+						<span>告<br>警<br>联<br>动</span>
+						</div></li>
+					<li><div class="l1">
+						<i><img src="../img/f8.png" ></i>
+						<span>节<br>目<br>预<br>览</span>
+						</div></li>
+				</ul>
+			</div>
+			
 		</div>
 	</body>
-	<script src="../js/echarts.min.js"></script>
-	<script src="../js/jquery.min.js" type="text/javascript" charset="utf-8"></script>
-	<script src="../js/vue.js" type="text/javascript" charset="utf-8"></script>
-	<script src="../js/axios.min.js" type="text/javascript" charset="utf-8"></script>
-	<script src="../js/swiper.min.js" type="text/javascript" charset="utf-8"></script>
-	<script src="../lib-master/index.js" charset="utf-8"></script>
+	
+	<script type="text/javascript" src="../js/echarts.min.js"></script>
+	<script type="text/javascript" src="../js/jquery.min.js" charset="utf-8"></script>
+	<script type="text/javascript" src="../js/rangeslider.js" charset="utf-8"></script>
+	<script type="text/javascript" src="../../../layuiadmin/lib/jquery.cookie.js" charset="utf-8"></script>
+	<script type="text/javascript" src="../js/cyberplayer/cyberplayer.js" charset="utf-8"></script>
+	<script type="text/javascript" src="../js/lc_switch.js" charset="utf-8"></script>
+	<script type="text/javascript" src="../js/vue.js" charset="utf-8"></script>
+
+	<script type="text/javascript" src="../js/axios.min.js" charset="utf-8"></script>
+
+	<script type="text/javascript" src="../lib-master/index.js" charset="utf-8"></script>
 
 	<script type="text/javascript" src="../js/maintext.js"></script>
 	<script type="text/javascript" src="../js/video.min.js"></script>
 	<script type="text/javascript" src="../js/videojs-flash.min.js"></script>
 	<script src="../js/data.js"></script>
 	<script type="text/javascript" src="https://webapi.amap.com/maps?v=1.4.15&key=7ab4ea4da0782fc8d35d97b24042016e&plugin=AMap.ControlBar,Map3D"></script>
+	<script type="text/javascript">
+		$(function(){
+			   var name = $.cookie('name');
+			   console.log(name)
+			 if(typeof(name)=="undefined"){
+				  
+				  location.href = "../../../views/user/login.html"
+			   }else{
+				   
+				    $(".adminName").text(name);
+			   }
+			 	
+				
+		});
+	</script>
 </html>

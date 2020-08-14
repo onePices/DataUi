@@ -25,6 +25,7 @@ new Vue({
 			type: [0],
 
 		},
+		dnum:0,
 		arrFalse: [true, false, false, false, false, false, false, false, false, false, false],
 		tableData: [{
 			equipment: '',
@@ -37,32 +38,36 @@ new Vue({
 			related: '',
 		}],
 		energyList: [],
-		imgs: [],
-		options: [{
-			value: '1',
-			label: '折线图'
-		}, {
-			value: '2',
-			label: '热力图'
+		imgs: [{
+			url:'',
+			content:''
 		}],
-		value: "1"
+		shuL:[{
+			name:"灯杆总数",
+			number:"1235",
+			date:''
+		},{
+			name:"在线数",
+			number:"935",
+			date:''
+		},{
+			name:"预计耗能",
+			number:"8.5",
+			date:'万kwh'
+		},{
+			name:"实际耗能",
+			number:"1235",
+			date:'万kwh'
+		}],
+		controlFrom:{
+			On_off:false,
+			
+		},
+		value1:'',
+		message:'<el-slider v-model="value1"></el-slider> '
 	},
 	methods: {
 
-		tableRow({
-			row,
-			rowIndex
-		}) {
-			if (rowIndex === 0) {
-				return 'row_1 ';
-			} else if (rowIndex === 1) {
-				return 'row_2 row_td';
-
-			} else if (rowIndex === 3) {
-				return 'row_td';
-			}
-
-		},
 		setNowTimes() {
 			let myDate = new Date()
 			// console.log(myDate)
@@ -90,18 +95,14 @@ new Vue({
 
 			axios.get(ServerBaseUrl + ':8011/getWarningInfo/warninginfo', { //params参数必写 , 如果没有参数传{}也可以
 				params: {
-
+					start:"1",
+					stop:"4",
 				}
 			}).then(res => {
 				if (res.status == 200) {
-					var result = [];
-
-					for (var i = 0; i < res.data.length; i++) {
-						result[i] = JSON.parse(res.data[i]);
-						result[i].url = ServerBaseUrl + result[i].url
-					};
-					this.tableData = result;
-					this.imgs = result;
+					
+					this.tableData = res.data.data;
+					
 				} else {}
 			}).catch(error => {
 				console.log(err);
@@ -109,34 +110,6 @@ new Vue({
 
 		},
 
-		temperature() {
-			this.drawHot();
-			$(".hot_one").addClass("f1");
-			$(".hot_two").removeClass("f2");
-			$(".hot_three").removeClass("f3");
-			$(".hot_four").removeClass("f4");
-		},
-		humidity() {
-			this.drawHot();
-			$(".hot_two").addClass("f2");
-			$(".hot_one").removeClass("f1");
-			$(".hot_three").removeClass("f3");
-			$(".hot_four").removeClass("f4");
-		},
-		PMtwo() {
-			this.drawHot();
-			$(".hot_three").addClass("f3");
-			$(".hot_one").removeClass("f1");
-			$(".hot_two").removeClass("f2");
-			$(".hot_four").removeClass("f4");
-		},
-		PMten() {
-			this.drawHot();
-			$(".hot_four").addClass("f4");
-			$(".hot_one").removeClass("f1");
-			$(".hot_two").removeClass("f2");
-			$(".hot_three").removeClass("f3");
-		},
 		//将多位数拆分成个位数
 		separate(num) {
 			var num = c = num; //输入数值
@@ -167,7 +140,7 @@ new Vue({
 			var that = this
 			axios.get(ServerBaseUrl + ':8011/getLightInfo/lightInfo', { //params参数必写 , 如果没有参数传{}也可以
 				params: {
-
+                
 				}
 			}).then(function(res) {
 				if (res.status == 200) {
@@ -215,293 +188,675 @@ new Vue({
 			this.drawChart();
 
 		},
+		//照明数据
+		drawDate(){
+			var online = parseInt(this.shuL[1].number/this.shuL[0].number*100);
+			var noline = 100-online;
+			var dateChart = echarts.init(document.getElementById("dateT"));
+			var placeHolderStyle = {
+			    normal: {
+			        label: {
+			            show: false
+			        },
+			        labelLine: {
+			            show: false
+			        },
+			        color: "rgba(0,0,0,0)",
+			        borderWidth: 0
+			    },
+			    emphasis: {
+			        color: "rgba(0,0,0,0)",
+			        borderWidth: 0
+			    }
+			};
+			
+			
+			var dataStyle = {
+			    normal: {
+			        formatter: '{c}%',
+			        position: 'center',
+			        show: true,
+			        textStyle: {
+			            fontSize: '14',
+			            fontWeight: 'normal',
+			            color: '#ffffff'
+			        }
+			    }
+			};
+			
+			
+			var option = {
+			     title: [{
+			        text: '亮灯率',
+			        left: '15%',
+			        top: '75%',
+			        textAlign: 'center',
+			        textStyle: {
+			            fontWeight: 'normal',
+			            fontSize: '12',
+			            color: '#fff',
+			            textAlign: 'center',
+			        },
+			    }, {
+			        text: '在线率',
+			        left: '48%',
+			        top: '75%',
+			        textAlign: 'center',
+			        textStyle: {
+			            color: '#fff',
+			            fontWeight: 'normal',
+			            fontSize: '12',
+			            textAlign: 'center',
+			        },
+			    }, {
+			        text: '节能率',
+			        left: '82%',
+			        top: '75%',
+			        textAlign: 'center',
+			        textStyle: {
+			            color: '#fff',
+			            fontWeight: 'normal',
+			            fontSize: '12',
+			            textAlign: 'center',
+			        },
+			    }],
+			
+			    //第一个图表
+			    series: [{
+			            type: 'pie',
+			            hoverAnimation: false, //鼠标经过的特效
+			            radius: ['85%', '100%'],
+			            center: ['16%', '50%'],
+			            startAngle: 225,
+			            labelLine: {
+			                normal: {
+			                    show: false
+			                }
+			            },
+			            label: {
+			                normal: {
+			                    position: 'center'
+			                }
+			            },
+			            data: [{
+			                    value: 100,
+			                    itemStyle: {
+			                        normal: {
+			                            color: ['rgba(176, 212, 251, 0.3)']
+			                        }
+			                    },
+			                }, {
+			                    value: 35,
+			                    itemStyle: placeHolderStyle,
+			                },
+			
+			            ]
+			        },
+			        //上层环形配置
+			        {
+			            type: 'pie',
+			            hoverAnimation: false, //鼠标经过的特效
+			            radius: ['85%', '100%'],
+			            center: ['16%', '50%'],
+			            startAngle: 225,
+			            labelLine: {
+			                normal: {
+			                    show: false
+			                }
+			            },
+			            label: {
+			                normal: {
+			                    position: 'center'
+			                }
+			            },
+			            data: [{
+			                    value: 75,
+			                    "itemStyle": {
+			                        "normal": {
+			                            "color": new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+			                                "offset": 0,
+			                                "color": '#00cefc'
+			                            }, {
+			                                "offset": 1,
+			                                "color": '#367bec'
+			                            }]),
+			                        }
+			                    },
+			                    label: dataStyle,
+			                }, {
+			                    value: 35,
+			                    itemStyle: placeHolderStyle,
+			                },
+			
+			            ]
+			        },
+			
+			
+			        //第二个图表
+			        {
+			            type: 'pie',
+			            hoverAnimation: false,
+			            radius: ['85%', '100%'],
+			            center: ['50%', '50%'],
+			            startAngle: 225,
+			            labelLine: {
+			                normal: {
+			                    show: false
+			                }
+			            },
+			            label: {
+			                normal: {
+			                    position: 'center'
+			                }
+			            },
+			            data: [{
+			                    value: 100,
+			                    itemStyle: {
+			                        normal: {
+			                            color: ['rgba(176, 212, 251, 0.3)']
+			                        }
+			                    },
+			
+			                }, {
+			                    value: 35,
+			                    itemStyle: placeHolderStyle,
+			                },
+			
+			            ]
+			        },
+			
+			        //上层环形配置
+			        {
+			            type: 'pie',
+			            hoverAnimation: false,
+			            radius: ['85%', '100%'],
+			            center: ['50%', '50%'],
+			            startAngle: 225,
+			            labelLine: {
+			                normal: {
+			                    show: false
+			                }
+			            },
+			            label: {
+			                normal: {
+			                    position: 'center'
+			                }
+			            },
+			            data: [{
+			                    value: online,
+			                    "itemStyle": {
+			                        "normal": {
+			                            "color": new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+			                                "offset": 0,
+			                                "color": '#9FE6B8'
+			                            }, {
+			                                "offset": 1,
+			                                "color": '#32C5E9'
+			                            }]),
+			                        }
+			                    },
+			                    label: dataStyle,
+			                }, {
+			                    value: noline,
+			                    itemStyle: placeHolderStyle,
+			                },
+			
+			            ]
+			        },
+			        //第三个图表
+			        {
+			            type: 'pie',
+			            hoverAnimation: false,
+			            radius: ['85%', '100%'],
+			            center: ['84%', '50%'],
+			            startAngle: 225,
+			            labelLine: {
+			                normal: {
+			                    show: false
+			                }
+			            },
+			            label: {
+			                normal: {
+			                    position: 'center'
+			                }
+			            },
+			            data: [{
+			                    value: 100,
+			                    itemStyle: {
+			                        normal: {
+			                            color: ['rgba(176, 212, 251, 0.3)']
+			                        }
+			                    },
+			
+			                }, {
+			                    value: 35,
+			                    itemStyle: placeHolderStyle,
+			                },
+			
+			            ]
+			        },
+			
+			        //上层环形配置
+			        {
+			            type: 'pie',
+			            hoverAnimation: false,
+			            radius: ['85%', '100%'],
+			            center: ['84%', '50%'],
+			            startAngle: 225,
+			            labelLine: {
+			                normal: {
+			                    show: false
+			                }
+			            },
+			            label: {
+			                normal: {
+			                    position: 'center'
+			                }
+			            },
+			            data: [{
+			                    value: 65,
+			                    "itemStyle": {
+			                        "normal": {
+			                            "color": new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+			                                "offset": 0,
+			                                "color": '#FDFF5C'
+			                            }, {
+			                                "offset": 1,
+			                                "color": '#FFDB5C'
+			                            }]),
+			                        }
+			                    },
+			                    label: dataStyle,
+			                }, {
+			                    value: 55,
+			                    itemStyle: placeHolderStyle,
+			                },
+			
+			            ]
+			        },
+			    ]
+			};
+			dateChart.setOption(option);
+			let sizeFun = function() {
+				dateChart.resize();
+			}
+			window.addEventListener('resize', sizeFun)
+		},
+		// 能耗统计
 		drawChart() {
-			const that = this
-			// 能耗统计
-			axios.get(ServerBaseUrl + ':8011/getEnergyConsu/getEnergyChart', { //params参数必写 , 如果没有参数传{}也可以
-				params: {
-
-				}
-			}).then(function(res) {
-				if (res.status == 200) {
-
-					function getDay(day) {
-						var today = new Date();
-						var targetday_milliseconds = today.getTime() + 1000 * 60 * 60 * 24 * day;
-						today.setTime(targetday_milliseconds); //注意，这行是关键代码
-						var tDate = today.getDate();
-
-						tDate = doHandleMonth(tDate);
-						return tDate;
-					};
-
-					function doHandleMonth(month) {
-						var m = month;
-						if (month.toString().length == 1) {
-							m = "0" + month;
-						}
-						return m;
-					};
-					var twoChart = echarts.init(document.getElementById("energy_item"));
-					var arrtxt = [];
-					var arrtxt = that.arrFalse;
-					var optionA = {
-						/* title: {
-						        text: '折线图堆叠'
-						    },*/
-						tooltip: {
-							trigger: 'item',
-							formatter: '{a} <br/>{b} : {c}' + 'kw.h'
-						},
-						legend: {
-
-							// 修改legend的高度宽度
-							itemHeight: 12,
-							itemWidth: 12,
-							data: [{
-									name: '照明',
-									icon: 'rect', // ledend的icon
-									textStyle: {
-										color: '#FF7E3D' // 图例文字颜色
-									}
-								},
-								{
-									name: '视频监控',
-									icon: 'rect', // ledend的icon
-									textStyle: {
-										color: '#C13DFF' // 图例文字颜色
-									}
-								},
-								{
-									name: '广播',
-									icon: 'rect', // ledend的icon
-									textStyle: {
-										color: '#c23531' // 图例文字颜色
-									}
-								},
-								{
-									name: '广告机',
-									icon: 'rect', // ledend的icon
-									textStyle: {
-										color: '#61a0a8' // 图例文字颜色
-									}
-								},
-								{
-									name: '环境监测',
-									icon: 'rect', // ledend的icon
-									textStyle: {
-										color: '#d48265' // 图例文字颜色
-									}
-								},
-								{
-									name: '充电桩',
-									icon: 'rect', // ledend的icon
-									textStyle: {
-										color: '#91c7ae' // 图例文字颜色
-									}
-								},
-								{
-									name: '一键报警',
-									icon: 'rect', // ledend的icon
-									textStyle: {
-										color: '#749f83' // 图例文字颜色
-									}
-								},
-								{
-									name: '垃圾桶',
-									icon: 'rect', // ledend的icon
-									textStyle: {
-										color: '#bda29a' // 图例文字颜色
-									}
-								},
-								{
-									name: '井盖',
-									icon: 'rect', // ledend的icon
-									textStyle: {
-										color: '#39c53b' // 图例文字颜色
-									}
-								},
-								{
-									name: '无线AP',
-									icon: 'rect', // ledend的icon
-									textStyle: {
-										color: '#2cf7ff' // 图例文字颜色
-									}
-								},
-								{
-									name: '交通信号灯',
-									icon: 'rect', // ledend的icon
-									textStyle: {
-										color: '#fff700' // 图例文字颜色
-									}
-								}
-							],
-							textStyle: {
-								color: '#FFFFFF'
-							},
-							/* right: "5%",
-							left: "15%",
-							top: "5%", */
-							show: false,
-							// 选择关闭的legend
-							selected: {
-								'照明': arrtxt[0],
-								'视频监控': arrtxt[1],
-								'环境监测': arrtxt[2],
-								'广告机': arrtxt[3],
-								'广播': arrtxt[4],
-								'充电桩': arrtxt[5],
-								'一键报警': arrtxt[6],
-								'垃圾桶': arrtxt[7],
-								'井盖': arrtxt[8],
-								'无线AP': arrtxt[9],
-								'交通信号灯': arrtxt[10],
-							},
-
-						},
-						grid: {
-							left: '3%',
-							right: '12%',
-							top: "20%",
-							bottom: "0%",
-							containLabel: true
-						},
-						/* toolbox: {
-						     feature: {
-						         saveAsImage: {}
-						     }
-						 },*/
-						xAxis: {
-							type: 'category',
-							boundaryGap: false,
-							data: [getDay(-6), getDay(-5), getDay(-4), getDay(-3), getDay(-2), getDay(-1), getDay(0)],
-							name: "/ 天",
-							nameTextStyle: {
-								color: "#3CD8FF",
-								fontSize: "10"
-							},
-							axisLine: {
-								lineStyle: {
-									color: '#ffffff',
-
-								}
-							}
-
-						},
-						yAxis: {
-							type: 'value',
-							name: "/ kw.h",
-							nameTextStyle: {
-								color: "#3CD8FF",
-								fontSize: "10"
-							},
-							splitLine: {
-								show: false
-							},
-							axisLine: {
-								lineStyle: {
-									color: '#ffffff',
-
-								}
-							}
-
-						},
-						series: [{
-								name: '照明',
-								type: 'line',
-								data: res.data[0],
-								color: "#FF7E3D",
-							},
-							{
-								name: '视频监控',
-								type: 'line',
-								data: res.data[1],
-								color: '#C13DFF'
-							},
-							{
-								name: '广播',
-								type: 'line',
-								data: res.data[2],
-								color: '#c23531'
-							},
-							{
-								name: '广告机',
-								type: 'line',
-								data: res.data[3],
-								color: '#61a0a8'
-							},
-							{
-								name: '环境监测',
-								type: 'line',
-								data: res.data[4],
-								color: '#d48265'
-							},
-							{
-								name: '充电桩',
-								type: 'line',
-								data: res.data[5],
-								color: '#91c7ae'
-							},
-							{
-								name: '一键报警',
-								type: 'line',
-								data: res.data[6],
-								color: '#749f83'
-							},
-							{
-								name: '垃圾桶',
-								type: 'line',
-								data: res.data[7],
-								color: '#bda29a'
-							},
-							{
-								name: '井盖',
-								type: 'line',
-								data: res.data[8],
-								color: '#39c53b'
-							},
-							{
-								name: '无线AP',
-								type: 'line',
-								data: res.data[9],
-								color: '#2cf7ff'
-							},
-							{
-								name: '交通信号灯',
-								type: 'line',
-								data: res.data[10],
-								color: '#fff700'
-							},
-
-						]
-					};
-					twoChart.setOption(optionA);
-					let sizeFun = function() {
-						twoChart.resize();
-					}
-					window.addEventListener('resize', sizeFun)
-				} else {
-					console.log(statusText)
-				}
-			}).catch(function(err) {
-				console.log(err);
+			var myChart = echarts.init(document.getElementById("energy_item"));
+			let data = [{
+			        level: '广播',
+			        landArea: 120,
+					total:200
+			    },
+			    {
+			        level: '监控',
+			        landArea: 200,
+					total:240
+			    },
+			    {
+			        level: '网关',
+			        landArea: 230,
+					total:240
+			    },
+			    {
+			        level: '照明',
+			        landArea: 280,
+					total:300
+			    },
+			    {
+			        level: '显示',
+			        landArea: 300,
+					total:300
+			    },
+			    {
+			        level: '其他',
+			        landArea: 200,
+					total:280
+			    },
+			    
+			]
+			const CubeLeft = echarts.graphic.extendShape({
+			    shape: {
+			        x: 0,
+			        y: 0
+			    },
+			    buildPath: function(ctx, shape) {
+			        const xAxisPoint = shape.xAxisPoint
+			        const c0 = [shape.x, shape.y]
+			        const c1 = [shape.x - 20, shape.y - 4]
+			        const c2 = [xAxisPoint[0] - 20, xAxisPoint[1] - 4]
+			        const c3 = [xAxisPoint[0], xAxisPoint[1]]
+			        ctx.moveTo(c0[0], c0[1]).lineTo(c1[0], c1[1]).lineTo(c2[0], c2[1]).lineTo(c3[0], c3[1]).closePath()
+			    }
+			})
+			const CubeRight = echarts.graphic.extendShape({
+			    shape: {
+			        x: 0,
+			        y: 0
+			    },
+			    buildPath: function(ctx, shape) {
+			        const xAxisPoint = shape.xAxisPoint
+			        const c1 = [shape.x, shape.y]
+			        const c2 = [xAxisPoint[0], xAxisPoint[1]]
+			        const c3 = [xAxisPoint[0] + 8, xAxisPoint[1] - 4]
+			        const c4 = [shape.x + 8, shape.y - 4]
+			        ctx.moveTo(c1[0], c1[1]).lineTo(c2[0], c2[1]).lineTo(c3[0], c3[1]).lineTo(c4[0], c4[1]).closePath()
+			    }
+			})
+			const CubeTop = echarts.graphic.extendShape({
+			    shape: {
+			        x: 0,
+			        y: 0
+			    },
+			    buildPath: function(ctx, shape) {
+			        // 逆时针 角 y 负数向上  X 负数向左
+			        const c1 = [shape.x, shape.y]
+			        const c2 = [shape.x + 8, shape.y - 4]
+			        const c3 = [shape.x - 11, shape.y - 8]
+			        const c4 = [shape.x - 20, shape.y - 4]
+			        ctx.moveTo(c1[0], c1[1]).lineTo(c2[0], c2[1]).lineTo(c3[0], c3[1]).lineTo(c4[0], c4[1]).closePath()
+			    }
+			})
+			echarts.graphic.registerShape('CubeLeft', CubeLeft)
+			echarts.graphic.registerShape('CubeRight', CubeRight)
+			echarts.graphic.registerShape('CubeTop', CubeTop)
+			let MAX = []
+			let VALUE = []
+			let LEV = []
+			let chartData = [].concat(data)
+			chartData.forEach(item => {
+			    VALUE.push(item.landArea)
+			    LEV.push(item.level)
+				MAX.push(item.total)
 			});
+			var option = {
+			   tooltip: {
+			        trigger: 'item',
+			        confine: false,
+			        position: 'top',
+			        textStyle: {
+			            fontSize: 12
+			        },
+			        // extraCssText: 'box-shadow: 0 0 20px #00C7FF inset',
+			        // backgroundColor: 'rgba(0,155,206,0.5)',
+			        backgroundColor: 'transparent',
+			        formatter: function(params) {
+			            let percentage = (VALUE[params.dataIndex] / MAX[params.dataIndex] * 100).toFixed(2)
+			            return `<div class="tooltip">${VALUE[params.dataIndex]}万/kwh (${percentage}%)</div>`
+			        },
+			        extraCssText: 'box-shadow: 0 0 20px #00C7FF inset;'
+			    },
+			    grid: {
+			        show: false,
+			        left: 0,
+			        right: 0,
+			        bottom: 8,
+			        top: 28,
+			        containLabel: true
+			    },
+			    xAxis: {
+			        type: 'category',
+			        data: LEV,
+			        axisLine: {
+			            show: true,
+			            lineStyle: {
+			                color:'#FFF',
+			            }
+			        },
+			        offset: 10,
+			        axisTick: {
+			            show: false
+			        },
+			        axisLabel: {
+			            fontSize: 12,
+			            color: "#fff"
+			        }
+			    },
+			    yAxis: {
+			        show: true,
+			        type: 'value',
+					name:'万/kwh',
+			        axisLine: {
+			            show: true,
+			            lineStyle: {
+			                color: '#FFF'
+			            }
+			        },
+			        splitLine: {
+			            show: false
+			        },
+			        axisTick: {
+			            show: false
+			        },
+			        axisLabel: {
+			            fontSize: 10
+			        },
+			        boundaryGap: ['20%', '20%']
+			    },
+			    series: [{
+			        type: 'custom',
+			        renderItem: function(params, api) {
+			            const location = api.coord([api.value(0), api.value(1)])
+						return {
+			                type: 'group',
+			                children: [{
+			                    type: 'CubeLeft',
+							
+			                    shape: {
+			                        api,
+			                        xValue: api.value(0),
+			                        yValue: api.value(1),
+			                        x: location[0],
+			                        y: location[1],
+			                        xAxisPoint: api.coord([api.value(0), 0])
+			                    },
+			                    style: {
+			                        fill: 'rgba(1,17,33,.5)'
+			                    }
+			                }, {
+			                    type: 'CubeRight',
+			                    shape: {
+			                        api,
+			                        xValue: api.value(0),
+			                        yValue: api.value(1),
+			                        x: location[0],
+			                        y: location[1],
+			                        xAxisPoint: api.coord([api.value(0), 0])
+			                    },
+			                    style: {
+			                        fill: 'rgba(1,17,33,.5)'
+			                    }
+			                }, {
+			                    type: 'CubeTop',
+			                    shape: {
+			                        api,
+			                        xValue: api.value(0),
+			                        yValue: api.value(1),
+			                        x: location[0],
+			                        y: location[1],
+			                        xAxisPoint: api.coord([api.value(0), 0])
+			                    },
+			                    style: {
+			                        fill: 'rgba(1,17,33,.5)'
+			                    }
+			                }]
+			            }
+			        },
+			        data: MAX
+			    }, {
+			        type: 'custom',
+			        renderItem: (params, api) => {
+			            const location = api.coord([api.value(0), api.value(1)])
+			            return {
+			                type: 'group',
+			                children: [{
+			                    type: 'CubeLeft',
+			                    shape: {
+			                        api,
+			                        xValue: api.value(0),
+			                        yValue: api.value(1),
+			                        x: location[0],
+			                        y: location[1],
+			                        xAxisPoint: api.coord([api.value(0), 0])
+			                    },
+			                    style: {
+			                        fill: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+			                            offset: 0,
+			                            color: '#1477BD'
+			                        }, {
+			                            offset: 1,
+			                            color: '#00FFFE'
+			                        }])
+			                    }
+			                }, {
+			                    type: 'CubeRight',
+			                    shape: {
+			                        api,
+			                        xValue: api.value(0),
+			                        yValue: api.value(1),
+			                        x: location[0],
+			                        y: location[1],
+			                        xAxisPoint: api.coord([api.value(0), 0])
+			                    },
+			                    style: {
+			                        fill: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+			                            offset: 0,
+			                            color: '#002E75' // 顶部
+			                        }, {
+			                            offset: 1,
+			                            color: '#00B0D0' // 底部
+			                        }])
+			                    }
+			                }, {
+			                    type: 'CubeTop',
+			                    shape: {
+			                        api,
+			                        xValue: api.value(0),
+			                        yValue: api.value(1),
+			                        x: location[0],
+			                        y: location[1],
+			                        xAxisPoint: api.coord([api.value(0), 0])
+			                    },
+			                    style: {
+			                        fill: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+			                            offset: 0,
+			                            color: '#33F7FB'
+			                        }, {
+			                            offset: 1,
+			                            color: '#00FFFE'
+			                        }])
+			                    }
+			                }]
+			            }
+			        },
+			        data: VALUE
+			    }, {
+			        type: 'bar',
+			        label: {
+			            normal: {
+			                show: true,
+			                position: 'top',
+			                formatter: (e) => {
+			                    switch (e.name) {			                        case '广播':			                            return MAX[0]			                        case '监控':			                            return MAX[1]			                        case '网关':			                            return MAX[2]			                        case '照明':			                            return MAX[3]			                        case '显示屏':			                            return MAX[4]			                        case '其他':			                            return MAX[5]			                    }
+			                },
+			                fontSize: 10,
+			                color: '#fff',
+			                offset: [-5, -5]
+			            }
+			        },
+			        itemStyle: {
+			            color: 'transparent'
+			        },
+			        data: MAX
+			    }]
+			}
+			myChart.setOption(option);
+			let sizeFun = function() {
+				myChart.resize();
+			}
+			window.addEventListener('resize', sizeFun)
+			},
+		onOff(){
+			this.dnum = this.dnum+1;
+			var nheight =$(".middle_bottom").height()*-1-10;
+			 if (this.dnum % 2 != 0) {
+			        $(".content_left").animate({left: "-20%"}, 500);
+					$(".content_right").animate({right: "-20%"}, 500);
+					$(".middle_bottom").animate({bottom: nheight}, 500);
+					$(".btn_on").animate({right:"4%"}, 500);
+					$(".btn_on").children("img").attr("src","../img/on2.gif");
+					$(".img_btn").animate({left:"4%"}, 500);
+					$(".img_btn").animate({top:"95px"}, 500);
+					$(".dimension").animate({right:"4%",top:"150px"}, 500);
+					setTimeout(function () {
+					$(".right_on").animate({right: "0"}, 500);
+					$(".left_on").animate({left: "0"}, 500);
+					$(".bottom_on").animate({bottom: "0"}, 500);
+					}, 600);
+					$(".btn_on").children("img").attr("src","../img/on2.gif");
+			    } else {
+				setTimeout(function () {
+			        $(".content_left").stop(true, true).animate({left: "0"}, 500);
+					$(".content_right").stop(true, true).animate({right: "0"}, 500);
+					$(".middle_bottom").stop(true, true).animate({bottom: "0"}, 500);
+					$(".btn_on").stop(true, true).animate({right: "21%"}, 500);
+					$(".btn_on").children("img").attr("src","../img/on1.gif");
+					$(".img_btn").stop(true, true).animate({left: "22%"}, 500);
+					$(".dimension").stop(true, true).animate({right:"24%",top:"120px"}, 500);
+					}, 600);
+					$(".right_on").stop(true, true).animate({right: "-20%"}, 500);
+					$(".left_on").stop(true, true).animate({left: "-20%"}, 500);
+					$(".bottom_on").stop(true, true).animate({bottom: "-20%"}, 500);
+					
+			    }
+				
+		},
+		videos() {
+			var widthv = $(".monitoring").width();
+			console.log(widthv)
+			
+			setTimeout(()=>{
+				var heightv = $(".monitoring").height();//widthv* 10 /16
+				console.log(heightv)
+				var player = cyberplayer("playercontainer").setup({
+						
+					file: "rtmp://rtmp01open.ys7.com/openlive/ac04fff8445444efb4bf215598e18b20", // <—rtmp直播地址
+					width: widthv,
+					height: heightv,
+					autostart: true,
+					stretching: "uniform",
+					volume: 100,
+					controls: false,
+					rtmp: {
+						reconnecttime: 5, // rtmp直播的重连次数
+						bufferlength: 1 // 缓冲多少秒之后开始播放 默认1秒
+					},
+					ak: "87a966ddaf2e45d6a0c4a5930c4d98ef" // 公有云平台注册即可获得accessKey
+				});
+			},200)
+			
 		},
 		swipers() {
 			const that = this;
 			axios.get(ServerBaseUrl + ':8011/getWarningInfo/warninginfo', { //params参数必写 , 如果没有参数传{}也可以
 				params: {
-
+					start:"1",
+					stop:"4",
 				}
 			}).then(function(res) {
 
 				if (res.status == 200) {
-					var result = [];
-					for (var i = 0; i < res.data.length; i++) {
-						result[i] = ServerBaseUrl + res.data[i];
-					};
-					that.items = result;
-
+					console.log(res)
+					that.imgs = res.data.data;
+					
+					
+					for(var i= 0;i<4;i++){
+						that.imgs[i].url = ServerBaseUrl+":80/" + that.imgs[i].url;
+						
+					}
+					console.log(that.imgs)
 				} else {
 					console.log(statusText)
 				}
@@ -510,275 +865,52 @@ new Vue({
 			});
 
 		},
-		//环境监测
-		lineChart() {
-			var myChart = echarts.init(document.getElementById("lineT"));
-			/* const hexToRgba = (hex, opacity) => {
-							let rgbaColor = "";
-							let reg = /^#[\da-f]{6}$/i;
-							if (reg.test(hex)) {
-								rgbaColor =
-									`rgba(${parseInt("0x" + hex.slice(1, 3))},${parseInt(
-						      "0x" + hex.slice(3, 5)
-						    )},${parseInt("0x" + hex.slice(5, 7))},${opacity})`;
-							}
-							return rgbaColor;
-						} */
-			var option = {
-				tooltip: {
-					trigger: 'item',
-					formatter: '{a} <br/>{b} : {c}'
-				},
-				legend: {
-
-					// 修改legend的高度宽度
-					itemHeight: 12,
-					itemWidth: 12,
-					data: [{
-							name: '温度',
-							icon: 'circle', // ledend的icon
-							textStyle: {
-								color: '#FF7E3D' // 图例文字颜色
-							}
-						},
-						{
-							name: '湿度',
-							icon: 'circle', // ledend的icon
-							textStyle: {
-								color: '#C13DFF' // 图例文字颜色
-							}
-						},
-						{
-							name: 'PM2.5',
-							icon: 'circle', // ledend的icon
-							textStyle: {
-								color: '#c23531' // 图例文字颜色
-							}
-						},
-						{
-							name: 'PM10',
-							icon: 'circle', // ledend的icon
-							textStyle: {
-								color: '#61a0a8' // 图例文字颜色
-							}
-						}
-					],
-					textStyle: {
-						color: '#FFFFFF'
-					},
-					right: "9%",
-					top: "2%",
-					// 选择关闭的legend
-					selectedMode: 'single'
-
-				},
-				grid: {
-					left: '3%',
-					right: '10%',
-					top: '15%',
-					bottom: '0%',
-					containLabel: true
-				},
-
-				xAxis: {
-					type: 'category',
-					boundaryGap: false,
-					data: ['3:00', '6:00', '9:00', '12:00', '15:00', '18:00', '21:00', '24:00'],
-					name: "/ h",
-					nameTextStyle: {
-						color: "#3CD8FF",
-						fontSize: "10"
-					},
-					axisLine: {
-						lineStyle: {
-							color: '#ffffff',
-
-						}
-					}
-
-				},
-				yAxis: {
-					type: 'value',
-					name: "/ kw.h",
-
-					nameTextStyle: {
-						color: "#3CD8FF",
-						fontSize: "10"
-					},
-					splitLine: {
-						show: false
-					},
-					axisLine: {
-						lineStyle: {
-							color: '#ffffff',
-						}
-					}
-
-				},
-				series: [
-
-					{
-						name: '温度',
-						type: 'line',
-						data: [50, 132, 101, 134, 90, 230, 210, 210],
-						color: "#FF7E3D",
-						smooth: true,
-					},
-					{
-						name: '湿度',
-						type: 'line',
-						data: [220, 182, 191, 134, 290, 330, 310, 310],
-						color: '#C13DFF',
-						smooth: true,
-					},
-					{
-						name: 'PM2.5',
-						type: 'line',
-						data: [150, 232, 201, 154, 190, 330, 410, 410],
-						color: '#c23531',
-						smooth: true,
-					},
-					{
-						name: 'PM10',
-						type: 'line',
-						data: [320, 332, 301, 334, 390, 330, 320, 320],
-						color: '#61a0a8',
-						smooth: true,
-					}
-
-				]
-			};
-			myChart.setOption(option);
-
-
-			//图标自适应
-			let sizeFun = function() {
-				myChart.resize();
-			}
-			window.addEventListener('resize', sizeFun)
-		},
-		changeChart() {
-			var val = this.value;
-			if (val == 1) {
-				$(".hot_ul").hide();
-				$("#lineT").show();
-				$("#hotT").hide();
-			} else if (val == 2) {
-				$(".hot_ul").show();
-				$("#hotT").show();
-				$("#lineT").hide();
-				this.drawHot();
-			}
-		},
-		/* 绘制热力图 */
-		drawHot() {
-
-			axios.get(ServerBaseUrl + ':8011/getHeatMap/getHeatMap', { //params参数必写 , 如果没有参数传{}也可以
-				params: {
-
-				}
-			}).then(res => {
-				var result = res.data;
-				if (!isSupportCanvas()) {
-					alert('热力图仅对支持canvas的浏览器适用,您所使用的浏览器不能使用热力图功能,请换个浏览器试试~')
-				}
-
-				/* 热力图 */
-				var map = new AMap.Map("hotT", {
-					resizeEnable: true,
-					center: [121.469211, 31.238164],
-					mapStyle: 'amap://styles/darkblue',
-					zoom: 11
-				});
-
-
-
-				var heatmap;
-				map.plugin(["AMap.Heatmap"], function() {
-					//初始化heatmap对象
-					heatmap = new AMap.Heatmap(map, {
-						radius: 25, //给定半径
-						opacity: [0, 0.85]
-						/*,
-						gradient:{
-						    0.5: 'blue',
-						    0.65: 'rgb(117,211,248)',
-						    0.7: 'rgb(0, 255, 0)',
-						    0.9: '#ffea00',
-						    1.0: 'red'
-						}
-						 */
-					});
-					//设置数据集
-					heatmap.setDataSet({
-						data: result,
-						max: 666
-					});
-				});
-
-				//判断浏览区是否支持canvas
-				function isSupportCanvas() {
-					var elem = document.createElement('canvas');
-					return !!(elem.getContext && elem.getContext('2d'));
-				}
-
-			}).catch(error => {
-				console.log(err);
-			});
-
-		},
+		
 	},
 
 	created() {
 		this.getTable();
 		this.light();
-		this.swipers()
+		this.swipers();
+		this.videos()
 		this.timer = setInterval(() => {
 			this.setNowTimes();
-			this.lineChart();
-			this.drawChart();
 		}, 500);
+		
+		setTimeout(() => {
+			this.drawChart();
+			this.drawDate()
+		},200);
 		/* this.separate() */
-		this.timer =setInterval(this.drawHot,100000);
-		this.timers =setInterval(this.getTable,5000);
-
+		this.timer = setInterval(() => {this.getTable()
+		}, 500000);
+		
 		$(function() {
+			
 			var viewH = $(window).height();
-			var maxHeight = viewH - 93;
-			$(".body_box .el-col").height(maxHeight);
-			$(".body_box .grid-content").height(maxHeight);
-			$(".body_box .grid-content .main_ul").height(maxHeight);
-			var listHeight = $(".item_list").height();
-			$(".item_list .left_txt").css("line-height", listHeight + "px");
-			$(".item_list .right_txt").css("line-height", listHeight + "px");
-			var vWidth = $(".video_box").width();
-			var vHeight = vWidth * 4 / 5;
-			var totalH = $(".right_frame.box2 .pie_box").height();
-			var imgH = totalH - 45 - vHeight;
-			$(".pie_img").height(imgH);
-			$(".video_box").height(vHeight);
-			var tableH = $(".bottom_box .el-table").height();
-			var mapH = maxHeight-tableH-40;
-			$(".main_middle").height(mapH);
-			// 设置flash路径,用于在videojs发现浏览器不支持HTML5播放器的时候自动唤起flash播放器
-			videojs.options.flash.swf = 'https://cdn.bootcss.com/videojs-swf/5.4.1/video-js.swf';
-			var player = videojs('my-player'); //my-player为页面video元素的id
-			player.play(); //播放
+			$(".bodys").height(viewH)
+			var mainHeight = (viewH-131)/4;
+			$(".main_ul").children("li").height(mainHeight);
+			$(".main_ul1").children("li").height(mainHeight-10);
+			var bheight  =(mainHeight-75)/2;
+			$(".environment li").height(bheight);
+			var cheight  =(mainHeight-203)/6;
+			$(".overview li").css("margin-top", cheight)
+			$(".overview li").css("margin-bottom", cheight)
+			$(".middle_bottom").height(mainHeight);
+			var nheight =$(".nav_bottom").height();
+			var taheight =mainHeight-nheight-40;
+			$(".bottom_box").height(taheight);
+			var imgh = mainHeight-80;
+			$(".zuxi").height(imgh);
+			
 			/* 绘制2D地图 */
 			Shapes();
 			$(".screen").click(function() {
-
 				$(".input-card").show();
-				var imgHeight = $(".cancel").height();
-				$(".cancel").width(imgHeight);
-				var theight = $(".check-box").height() + 50;
-				var total = parseInt(imgHeight + theight);
-				$(".input-card").height(total);
-
 			});
 			$(".cancel").click(function() {
 				$(".input-card").hide();
-
 			});
 			$(".shapes").click(function() {
 				Shapes();
@@ -789,45 +921,143 @@ new Vue({
 				modeling();
 				$(".modeling").addClass("inChecked");
 				$(".shapes").removeClass("inChecked");
-				$(".screen").hide()
+				
 			});
 		});
 		/* 绘制2D地图 */
 		function Shapes(){
 			  map && map.destroy();
-			var map = new AMap.Map('container', {
-					zoom: 15, //级别
+			  
+			  
+			var map = new AMap.Map('allMap', {
+					zoom: 16, //级别
 					mapStyle: 'amap://styles/31f8e758bcafa2d0aa535571d1a8616e',
 					resizeEnable: true, //是否监控地图容器尺寸变化
+					zooms:[16,20],
 					rotateEnable:true,
 					pitchEnable:true,
 					center: [121.613776,31.303634], //中心点坐标
 				});
 				/* map.setMapStyle('amap://styles/31f8e758bcafa2d0aa535571d1a8616e');	 */
+				var winds =`<div class="window_box" style="padding:15px 20px;width:355px;height:182px;display: block; "> <div class="window_top"> <h4>照明:MD-25</h4> <div class="fromRight"><input type="checkbox" name="check-1" value="4" class="lcs_check" autocomplete="off" /></div> </div> <div class="window_middle"> <div class="middle_item"> <span>在线</span> <p>在线状态</p> </div> <div class="middle_item"> <span>开</span> <p>设备状态</p> </div> <div class="middle_item"> <span>135.25kwh</span> <p>当日耗能</p> </div> </div> <div class="window_bottom"> <span>亮度调节：</span> <input type="range" min="1" max="99" step="1" value="99" data-rangeslider><span><output class="output"></output>Lux</span> </div> </div>`;
 				 
-				
 				var lnglat = lnglats1[0];
-				var marker = [];
-				var markers = [];
+				var windows ='<div class="windox"></div>'
 				
+				var marker = [];
+				var  preIcon, clickIcon,markers = [];
+				var infoWindow = new AMap.InfoWindow({offset: new AMap.Pixel(0, -30)});
+				preIcon = new AMap.Icon({
+				        image: "../img/icon0.png",
+				        size: new AMap.Size(59, 71), //图标大小
+				       anchor:'bottom-center',
+				       zIndex:-100
+				    });
+				    clickIcon = new AMap.Icon({
+				        image: "../img/icom0-1.png",
+				        size: new AMap.Size(76, 86), //图标大小
+				       anchor:'top-center',
+				       zIndex:-100
+				    });
+
+			
 			for (var i = 0; i < lnglat.length; i++) {
 				var lng = lnglat[i];
 				marker = new AMap.Marker({
 						position: new AMap.LngLat(lng[0], lng[1]),
-						icon: new AMap.Icon({
-							size: new AMap.Size(36, 50), //图标大小
-							image: "../img/icon0.png"
-						}),
+						icon: preIcon,
 						extData: {
-							id: i + 1
+							id:"a"+(i + 1)
 						},
 						
 					});
-					markers.push(marker);}
+					
+					markers.push(marker);
+					marker.con = winds ;
+					marker.emit('click', {target: marker});
+					marker.on('click', markerClick);
+					
+					}
 					map.add(new AMap.OverlayGroup(markers));
-				 
+				function markerClick(e) {
+						  
+				       
+					   setTimeout(function(){
+						   infoWindow.setContent(e.target.con);
+						   $('input').lc_switch();
+						   $('body').delegate('.lcs_check', 'lcs-statuschange', function() {
+						   	var status = ($(this).is(':checked')) ? 'checked' : 'unchecked';
+						   	console.log('field changed status: '+ status );
+							if(status =="checked"){
+							var onstatus = "on";	
+							}else{
+							var onstatus = "off";		
+							};
+							axios.get(ServerBaseUrl + ':8011/getHeatMap/getLight?ctrlType=switch', { //params参数必写 , 如果没有参数传{}也可以
+								params: {
+									value: onstatus,
+								},
+							}).then(function() {
+							
+							}).catch(function(err) {
+								
+							});
+						   });
+						   $('body').delegate('.lcs_check', 'lcs-on', function() {
+						   	console.log('field is checked');
+						   });
+						   $('body').delegate('.lcs_check', 'lcs-off', function() {
+						   	console.log('field is unchecked');
+						   });
+							var $document   = $(document);
+							var selector    = '[data-rangeslider]';
+							var $inputRange = $(selector);
+							
+							// Example functionality to demonstrate a value feedback
+							// and change the output's value.
+							function valueOutput(element) {
+							    var value = element.value;
+							    var output = element.parentNode.getElementsByTagName('output')[0];
+							
+							    output.innerHTML = value;
+							}
+							
+							// Initial value output
+							for (var i = $inputRange.length - 1; i >= 0; i--) {
+							    valueOutput($inputRange[i]);
+							};
+							
+							// Update value output
+							$document.on('input', selector, function(e) {
+							    valueOutput(e.target);
+								var text = $('.output').text()
+								console.log(text)
+								axios.get(ServerBaseUrl + ':8011/getHeatMap/getLight?ctrlType=pwm&value=' + text, { //params参数必写 , 如果没有参数传{}也可以
+									params: {
+										
+									},
+								
+								}).then(function(res) {
+								
+								}).catch(function(err) {
+									console.log(err);
+								});
+							});
+						 },100)
+				       infoWindow.open(map, e.target.getPosition());
+					  
+					    for (var i = 0; i < markers.length; i++) {
+					               markers[i].setIcon(preIcon);
+								 
+					           }
+				
+						e.target.setIcon(clickIcon);
+										 var tyoe = e.target.getExtData();
+										 console.log(tyoe)
+				   }
 				$("#btn_box").click(function() {
 								var text = $("#types").val();
+								console.log(text)
 								var array = text.split(",");
 								var colloctionTeam = [0,1,2,3,4,6,9];
 								var colloctionTeamIndex = 0;
@@ -862,41 +1092,48 @@ new Vue({
 												marker[i] = new AMap.Marker({
 													position: new AMap.LngLat(lng[0], lng[1]),
 													icon: new AMap.Icon({
-														size: new AMap.Size(36, 50), //图标大小
+														size: new AMap.Size(59, 71), //图标大小
 														image: "../img/icon" + indexIcon + ".png",
 														anchor:'bottom-center',
 														zIndex:-100
 													}),
 													extData: {
 														id: i + 1
-													}
+													},
+													
 												});
 												markers.push(marker[i]);
 												map.add(new AMap.OverlayGroup(markers));
+												
 											};
 										}else{
 											var indexs = array[j];
 											var lnglat = lnglats1[indexs];
 											var marker = [];
 											var markers = [];
+											
 											for (var i = 0; i < lnglat.length; i++) {
 												var lng = lnglat[i];
 												// 创建点实例
 												marker[i] = new AMap.Marker({
 													position: new AMap.LngLat(lng[0], lng[1]),
 													icon: new AMap.Icon({
-														size: new AMap.Size(36, 50), //图标大小
+														size: new AMap.Size(59, 71), //图标大小
 														image: "../img/icon" + indexs + ".png",
 														anchor:'bottom-center',
 														zIndex:-100
 													}),
 													extData: {
 														id: i + 1
-													}
+													},
+													
 												});
 												markers.push(marker[i]);
 												map.add(new AMap.OverlayGroup(markers));
+												
+											
 											};
+											
 										}
 										
 				
@@ -906,12 +1143,13 @@ new Vue({
 								
 				
 							});
-							
+				
+			    map.setFitView();
 		};
 		/* 绘制3D地图 */
 			function modeling(){
 				  map && map.destroy();
-				var map = new AMap.Map('container', {
+				var map = new AMap.Map('allMap', {
 						zoom: 17, //级别
 						mapStyle: 'amap://styles/31f8e758bcafa2d0aa535571d1a8616e',
 						resizeEnable: true, //是否监控地图容器尺寸变化
@@ -931,8 +1169,8 @@ new Vue({
 					    showZoomBar:false,
 					    showControlButton:true,
 					    position:{
-					      left:'-80px',
-					      top:'10px'
+					      right:'22%',
+					      top:'178px'
 					    }
 					  }))
 					 // 创建Object3DLayer图层
@@ -979,46 +1217,27 @@ new Vue({
 		//根据预览器的窗口改变宽高
 		$(window).resize(function() {
 			var viewH = $(window).height();
-			var maxHeight = viewH - 93;
-			$(".body_box .el-col").height(maxHeight);
-			$(".body_box .grid-content").height(maxHeight);
-			$(".body_box .grid-content .main_ul").height(maxHeight);
-			var listHeight = $(".item_list").height();
-			$(".item_list .left_txt").css("line-height", listHeight + "px");
-			$(".item_list .right_txt").css("line-height", listHeight + "px");
-			var vWidth = $(".video_box").width();
-			var vHeight = vWidth * 4 / 5;
-			$(".video_box").height(vHeight);
-			var totalH = $(".right_frame.box2 .pie_box").height();
-			var imgH = totalH - 45 - vHeight;
-			$(".pie_img").height(imgH);
-			$(".video_box").height(vHeight);
-			var tableH = $(".bottom_box .el-table").height();
-			var mapH = maxHeight - tableH - 40;
-			$(".main_middle").height(mapH);
+			$(".bodys").height(viewH)
+			var mainHeight = (viewH-131)/4;
+			$(".main_ul").children("li").height(mainHeight);
+			var bheight  =(mainHeight-75)/2;
+			$(".environment li").height(bheight);
+			var cheight  =(mainHeight-203)/6;
+			$(".overview li").css("margin-top", cheight)
+			$(".overview li").css("margin-bottom", cheight)
+			$(".middle_bottom").height(mainHeight);
+			var nheight =$(".nav_bottom").height();
+			var taheight =mainHeight-nheight-35;
+			$(".bottom_box").height(taheight);
+			var imgh = mainHeight-80;
+			$(".zuxi").height(imgh);
 		});
-		setTimeout(() => {
-			var swiper = new Swiper('.swiper-container', {
-				slidesPerView: 3,
-				spaceBetween: 10,
-				slidesPerGroup: 3,
-				loop: true,
-				loopFillGroupWithBlank: true,
-				pagination: {
-					el: '.swiper-pagination',
-					clickable: true,
-				},
-				navigation: {
-					nextEl: '.swiper-button-next',
-					prevEl: '.swiper-button-prev',
-				},
-			});
-		}, 300)
+		
 
 	},
 	beforeDestroy() {
-		clearInterval(this.timer);
 		clearInterval(this.timers);
+		clearInterval(this.timer);
 	}
 
 })

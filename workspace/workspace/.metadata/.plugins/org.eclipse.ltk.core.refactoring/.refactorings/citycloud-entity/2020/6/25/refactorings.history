@@ -1,4 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<session version="1.0">
-<refactoring comment="Copy package &apos;com.web.entity&apos; to &apos;WisdomCity/src/main/java&apos;&#x0D;&#x0A;- Original project: &apos;citycloud-entity&apos;&#x0D;&#x0A;- Destination element: &apos;WisdomCity/src/main/java&apos;&#x0D;&#x0A;- Original element: &apos;citycloud-entity/src/main/java/com.web.entity&apos;" description="Copy package" destination="=WisdomCity/src\/main\/java" element1="/src\/main\/java&lt;com.web.entity" flags="589830" fragments="1" id="org.eclipse.jdt.ui.copy" policy="org.eclipse.jdt.ui.copyPackages" stamp="1592297527358" version="1.0"/>
-</session>
